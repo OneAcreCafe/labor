@@ -29,7 +29,13 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'haml-rails'
 gem 'bootstrap-sass-rails'
+
 gem 'devise'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+
+# Environment variables in config/application.yml
+gem 'figaro'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
