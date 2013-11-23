@@ -31,7 +31,7 @@ gem 'haml-rails'
 gem 'bootstrap-sass-rails'
 
 gem 'devise'
-gem 'omniauth-facebook'
+gem 'omniauth-facebook', '= 1.4.0'
 gem 'omniauth-twitter'
 
 # Environment variables in config/application.yml
