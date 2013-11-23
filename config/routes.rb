@@ -1,4 +1,5 @@
 Volunteers::Application.routes.draw do
+  devise_for :users
   resources :shifts
 
   resources :tasks
