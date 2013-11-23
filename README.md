@@ -1,4 +1,4 @@
-volunteers
+Volunteers
 ==========
 
 Volunteer management software
