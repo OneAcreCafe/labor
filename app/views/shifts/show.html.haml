@@ -8,7 +8,7 @@
   = @shift.end
 %p
   %b Task:
-  = @shift.task
+  = @shift.task.name if @shift.task
 
 = link_to 'Edit', edit_shift_path(@shift)
 \|

@@ -13,7 +13,7 @@
     %tr
       %td= shift.start
       %td= shift.end
-      %td= shift.task
+      %td= shift.task.name if shift.task
       %td= link_to 'Show', shift
       %td= link_to 'Edit', edit_shift_path(shift)
       %td= link_to 'Destroy', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }
