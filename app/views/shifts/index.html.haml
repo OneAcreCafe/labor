@@ -3,7 +3,7 @@
 %table
   %tr
     %th Start
-    %th Duration
+    %th End
     %th Task
     %th
     %th
@@ -12,7 +12,7 @@
   - @shifts.each do |shift|
     %tr
       %td= shift.start
-      %td= shift.duration
+      %td= shift.end
       %td= shift.task
       %td= link_to 'Show', shift
       %td= link_to 'Edit', edit_shift_path(shift)
