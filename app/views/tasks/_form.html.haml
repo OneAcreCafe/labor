@@ -6,11 +6,12 @@
         - @task.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :description
-    = f.text_field :description
-  .actions
-    = f.submit 'Save'
+  .form-group
+    = f.label :name, class: 'col-sm-1 control-label'
+    .col-sm-11
+      = f.text_field :name, class: 'form-control'
+  .form-group
+    = f.label :description, class: 'control-label'
+    = f.text_area :description, class: 'form-control'
+  
+  = f.submit 'Save', class: 'form-control'
