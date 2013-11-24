@@ -76,6 +76,7 @@ class ShiftsController < ApplicationController
       event.start = shift.start
       event.end = shift.end
       event.summary = shift.task.name if shift.task
+      event.uid = shift_url(shift)
       
       # insert the event into the calendar
       cal.add event
