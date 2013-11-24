@@ -1,9 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  name: MyString
-  description: MyString
+server:
+  name: Server
+  description: Serve food to customers
 
-two:
-  name: MyString
-  description: MyString
+sous-chef:
+  name: Sous-chef
+  description: Assist the chef prepare food
+
+greeter:
+  name: Greeter
+  description: Welcome customers to the establishment
+
+janitor:
+  name: Janitorial
+  description: Maintain the cleanliness of the establishment
