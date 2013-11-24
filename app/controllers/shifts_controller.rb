@@ -6,6 +6,12 @@ class ShiftsController < ApplicationController
   # GET /shifts.json
   def index
     @shifts = Shift.all
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @shifts }
+      format.ics  { render :text => self.generate_ical }
+    end
   end
 
   # GET /shifts/1
@@ -62,6 +68,23 @@ class ShiftsController < ApplicationController
     end
   end
 
+  def generate_ical
+    cal = Icalendar::Calendar.new
+    @shifts.each do |shift|
+      # create the event for this tool
+      event = Icalendar::Event.new
+      event.start = shift.start
+      event.end = shift.end
+      event.summary = shift.task.name if shift.task
+      
+      # insert the event into the calendar
+      cal.add event
+    end
+    
+    # return the calendar as a string
+    cal.to_ical
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_shift
@@ -70,6 +93,6 @@ class ShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_params
-      params.require(:shift).permit(:start, :duration, :task_id)
+      params.require(:shift).permit(:start, :end, :task_id)
     end
 end

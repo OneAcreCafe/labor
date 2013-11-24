@@ -34,6 +34,8 @@ gem 'devise'
 gem 'omniauth-facebook', '= 1.4.0'
 gem 'omniauth-twitter'
 
+gem 'icalendar'
+
 # Environment variables in config/application.yml
 gem 'figaro'
 

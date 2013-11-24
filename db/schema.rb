@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131123133959) do
+ActiveRecord::Schema.define(version: 20131124164637) do
 
   create_table "shifts", force: true do |t|
     t.datetime "start"
-    t.integer  "duration"
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "end"
   end
 
   add_index "shifts", ["task_id"], name: "index_shifts_on_task_id"
