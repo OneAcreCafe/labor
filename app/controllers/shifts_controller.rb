@@ -73,8 +73,8 @@ class ShiftsController < ApplicationController
     @shifts.each do |shift|
       # create the event for this tool
       event = Icalendar::Event.new
-      event.dtstart = shift.start
-      event.dtend = shift.end
+      event.start = shift.start.strftime("%Y%m%dT%H%M%S")
+      event.end = shift.end.strftime("%Y%m%dT%H%M%S")
       event.summary = shift.task.name if shift.task
       event.uid = shift_url(shift)
       
