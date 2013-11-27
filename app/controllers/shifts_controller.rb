@@ -11,6 +11,7 @@ class ShiftsController < ApplicationController
       format.html # index.html.erb
       format.xml  { render :xml => @shifts }
       format.ics  { render :text => self.generate_ical }
+      format.json
     end
   end
 
