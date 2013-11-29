@@ -7,6 +7,10 @@
   %b Description:
   = @task.description
 
+%p
+  %b Icon:
+  = image_tag @task.icon, class: :icon
+
 = link_to 'Edit', edit_task_path(@task)
 \|
 = link_to 'Back', tasks_path

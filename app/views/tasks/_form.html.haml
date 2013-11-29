@@ -11,6 +11,10 @@
     .col-sm-11
       = f.text_field :name, class: 'form-control'
   .form-group
+    = f.label :icon, class: 'col-sm-1 control-label'
+    .col-sm-11
+      = f.text_field :icon, class: 'form-control'
+  .form-group
     = f.label :description, class: 'control-label'
     = f.text_area :description, class: 'form-control'
   
