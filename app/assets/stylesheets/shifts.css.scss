@@ -1,3 +1,47 @@
 // Place all the styles related to the Shifts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+  font: 10px sans-serif;
+  shape-rendering: crispEdges;
+}
+
+text {
+    font-size: 50px;
+}
+
+text.label {
+    font-size: 50px;
+}
+
+.icon rect {
+    fill: lightgray;
+    stroke: #555;
+    stroke-width: 2;
+}
+
+.icon:hover rect {
+    fill: darkorange ! important;
+}
+
+.icon.selected rect {
+    fill: yellow;
+}
+
+.day {
+  fill: #fff;
+  stroke: #ccc;
+}
+
+.month {
+  fill: none;
+  stroke: #000;
+  stroke-width: 2px;
+}
+
+.shift {
+  fill: teal;
+  stroke: #ccc;
+  stroke-width: 1px;
+}
