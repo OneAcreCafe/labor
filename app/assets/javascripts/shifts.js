@@ -174,6 +174,10 @@ function renderShiftsCalendar() {
                     if( ! selected ) {
                         d3.select( this ).attr( "class", "icon selected" )
                     }
+                } )
+                .on( "dblclick", function( d ) {
+                    console.log( d )
+                    window.location = d.url
                 })
 
             icons
