@@ -20,7 +20,7 @@ $( function() {
         shiftPadding = cellSize * .02,
         iconPadding = cellSize * .02 
     
-    var svg = d3.select("#body").selectAll("svg")
+    var svg = d3.select("#shifts").selectAll("svg")
         .data(d3.range(2013, 2015))
         .enter().append("svg")
         .attr("viewBox", "0 0 " + width + " " + height)
@@ -203,4 +203,7 @@ $( function() {
                 } )
         } )
     } )
+    setTimeout( function() {
+        window.scrollTo( 0, week( new Date() ) * cellSize * .93 )
+    }, 10 )
 } )
