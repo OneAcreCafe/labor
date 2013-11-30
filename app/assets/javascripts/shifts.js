@@ -1,4 +1,4 @@
-$( function() {
+function renderShiftsCalendar() {
     var width = window.innerWidth,
         cellSize = width / 8,
         height = cellSize * 53.75,
@@ -206,4 +206,8 @@ $( function() {
     setTimeout( function() {
         window.scrollTo( 0, week( new Date() ) * cellSize * .93 )
     }, 10 )
-} )
+}
+
+// Load on turbolinks page change
+$(document).on( 'page:load', renderShiftsCalendar )
+$(document).ready( renderShiftsCalendar )

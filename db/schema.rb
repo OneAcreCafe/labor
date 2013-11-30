@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129042640) do
+ActiveRecord::Schema.define(version: 20131130221735) do
 
   create_table "shifts", force: true do |t|
     t.datetime "start"
@@ -22,6 +22,14 @@ ActiveRecord::Schema.define(version: 20131129042640) do
   end
 
   add_index "shifts", ["task_id"], name: "index_shifts_on_task_id"
+
+  create_table "shifts_users", force: true do |t|
+    t.integer "shift_id"
+    t.integer "user_id"
+  end
+
+  add_index "shifts_users", ["shift_id"], name: "index_shifts_users_on_shift_id"
+  add_index "shifts_users", ["user_id"], name: "index_shifts_users_on_user_id"
 
   create_table "tasks", force: true do |t|
     t.string   "name"
