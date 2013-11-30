@@ -13,6 +13,9 @@
     = f.label :end
     = f.datetime_select :end
   .field
+    = f.label :size
+    = f.text_field :size
+  .field
     = f.label :task
     = f.collection_select :task_id, Task.all, :id, :name, { prompt: "Task" , :selected => @shift.task ? @shift.task.id : nil }
   .field
