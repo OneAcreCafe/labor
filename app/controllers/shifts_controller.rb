@@ -81,8 +81,11 @@ class ShiftsController < ApplicationController
   end
 
   def take
+    @shifts = []
     params[:worker_ids].each do |id|
-      puts id
+      shift = Shift.find(id)
+      shift.workers << current_user
+      @shifts << shift
     end
   end
 

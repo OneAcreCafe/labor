@@ -1,24 +1,5 @@
 %h1 Listing shifts
 
-%table
-  %tr
-    %th Start
-    %th End
-    %th Size
-    %th Task
-    %th
-    %th
-    %th
-
-  - @shifts.each do |shift|
-    %tr
-      %td= shift.start
-      %td= shift.end
-      %td= shift.size
-      %td= shift.task.name if shift.task
-      %td= link_to 'Show', shift
-      %td= link_to 'Edit', edit_shift_path(shift)
-      %td= link_to 'Destroy', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
