@@ -16,9 +16,12 @@
 - if current_user && (current_user.role?(:manager) || current_user.role?(:admin))
   %p
     %b Workers:
-    %ul
-      - @shift.workers.each do |worker|
-        %li= worker.email
+    - if @shift.workers.count == 0
+      None
+    - else
+      %ul
+        - @shift.workers.each do |worker|
+          %li= worker.email
 
 - if current_user && @shift.worker?(current_user)
   %p You are signed up for this shift

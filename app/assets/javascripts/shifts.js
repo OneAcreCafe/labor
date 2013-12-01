@@ -169,7 +169,6 @@ function renderShiftsCalendar() {
                 shifts
                     .append("rect")
                     .attr( {
-                        class: 'shift',
                         width: cellSize,
                         height: function( d ) { return shiftHeight( d.values[0] ) },
                         x: 0,
@@ -192,15 +191,15 @@ function renderShiftsCalendar() {
                             )
                         }
                     } )
-                    .classed( 'taken', function( d ) { console.log( d.taken ); return d.taken } )
+                    .classed( 'taken', function( d ) { return d.taken } )
                     .on( "click", function() {
-                        if( $(this).parent().children().hasClass( 'taken' ).size() > 0 ) {
+                        if( d3.select( this.parentNode ).selectAll( '.icon' ).classed( 'taken' ) ) {
                             return
                         }
                         var selected = d3.select( this ).classed( 'selected' )
-                        d3.select( this.parentNode ).selectAll( ".icon" ).attr( "class", "icon" )
+                        d3.select( this.parentNode ).selectAll( '.icon' ).classed( 'selected', false )
                         if( ! selected ) {
-                            d3.select( this ).attr( "class", "icon selected" )
+                            d3.select( this ).classed( 'selected', true )
                         }
                     } )
                     .on( "dblclick", function( d ) {
