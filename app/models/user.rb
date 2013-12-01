@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def role?(role)
-    roles.collect(&:name).include? role
+    roles.collect(&:name).map(&:downcase).include? role.to_s
   end
   
   def update_with_password(params, *options)
