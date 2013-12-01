@@ -3,6 +3,7 @@
     %th Start
     %th End
     %th Size
+    %th Needed
     %th Task
     %th
     %th
@@ -13,6 +14,7 @@
       %td= shift.start
       %td= shift.end
       %td= shift.size
+      %td= shift.needed
       %td= shift.task.name if shift.task
       %td= link_to 'Show', shift
       %td= link_to 'Edit', edit_shift_path(shift)
