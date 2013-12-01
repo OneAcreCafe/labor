@@ -37,6 +37,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'haml-rails'
 gem 'bootstrap-sass-rails'
 
+gem 'bootstrap-datepicker-rails'
+
 gem 'devise'
 gem 'omniauth-facebook', '= 1.4.0'
 gem 'omniauth-twitter'

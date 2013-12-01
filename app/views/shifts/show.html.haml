@@ -18,6 +18,6 @@
     - @shift.workers.each do |worker|
       %li= worker.email
 
-= link_to 'Edit', edit_shift_path(@shift)
-\|
-= link_to 'Back', shifts_path
+= link_to 'Delete', @shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+= link_to 'Edit', edit_shift_path(@shift), class: [:btn, 'btn-default']
+= link_to 'Back', shifts_path, class: [:btn, 'btn-default']

@@ -3,16 +3,15 @@
 = form_tag clone_shifts_path do
 
   .field
-    = label_tag 'From Start'
-    = date_select 'clone', 'from_start'
+    = label_tag 'Range to Clone'
+    .input-daterange
+      = text_field :from, :start, data: { provide: :datepicker }, class: 'input-small'
+      %span.add-on to
+      = text_field :from, :end, data: { provide: :datepicker }, class: 'input-small'
 
   .field
-    = label_tag 'From End'
-    = date_select 'clone', 'from_end'
-
-  .field
-    = label_tag 'To'
-    = date_select 'clone', 'to'
+    = label_tag 'To Start Date'
+    = text_field :to, :start, data: { provide: :datepicker }, class: 'input-small'
 
   .field
     = submit_tag 'Clone'
