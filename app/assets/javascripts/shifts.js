@@ -262,4 +262,4 @@ function tasksAddListener() {
 $(document).on( 'page:load', tasksAddListener )
 $(document).ready( tasksAddListener )
 
-$.fn.datepicker.defaults.format = 'd/m/yyyy'
+$.fn.datepicker.defaults.format = 'yyyy/m/d'

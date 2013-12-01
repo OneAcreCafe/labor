@@ -93,18 +93,24 @@ class ShiftsController < ApplicationController
   end
 
   def do_clone
-    from_start = DateTime.strptime( params[:from][:start], '%d/%m/%Y' )
-    from_end = DateTime.strptime( params[:from][:end], '%d/%m/%Y' )
-    to_start = DateTime.strptime( params[:to][:start], '%d/%m/%Y' )
+    date_format = '%Y/%m/%d'
+    from_start = DateTime.strptime( params[:from][:start], date_format )
+    from_end = DateTime.strptime( params[:from][:end], date_format )
+    to_start = DateTime.strptime( params[:to][:start], date_format )
 
     originals = Shift.where('start >= ? AND start <= ?', from_start, from_end)
     puts originals.count
     originals.each do |shift|
-      Shift.create( {
-                      start: to_start + (shift.start - from_start),
-                      end: to_start + (shift.start - from_start),
-                      task: shift.task
-      } )
+      puts 'To: ' + to_start.to_s
+      puts 'From: ' + from_start.to_s
+      puts 'Start: ' + shift.start.to_s
+      puts (shift.start - from_start)
+      puts to_start + (shift.start.to_datetime - from_start)
+      new = shift.dup
+      new.workers = []
+      new.start = to_start + (shift.start.to_datetime - from_start)
+      new.end = to_start + (shift.end.to_datetime - from_start)
+      new.save
     end
 
     redirect_to action: :index
