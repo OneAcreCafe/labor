@@ -13,12 +13,15 @@
   %b Task:
   = @shift.task.name if @shift.task
 -# if can? :read, @shift.workers
-- if current_user.role?(:manager) || current_user.role?(:admin)
+- if current_user && (current_user.role?(:manager) || current_user.role?(:admin))
   %p
     %b Workers:
     %ul
       - @shift.workers.each do |worker|
         %li= worker.email
+
+- if current_user && @shift.worker?(current_user)
+  %p You are signed up for this shift
 
 - if can? :destroy, @shift
   = link_to 'Delete', @shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']

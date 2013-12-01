@@ -2,7 +2,7 @@ class ShiftsController < ApplicationController
   # before_action :set_shift, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:index, :show, :open]
   load_and_authorize_resource
-  skip_authorize_resource only: [:open, :take]
+  skip_authorize_resource only: [:open, :take, :taken]
 
   # GET /shifts
   # GET /shifts.json
@@ -18,7 +18,7 @@ class ShiftsController < ApplicationController
   end
 
   def open
-    @shifts = Shift.all.select{ |s| s.needed > 0 }
+    @shifts = Shift.all.select{ |s| s.needed > 0 || s.worker?(current_user) }
 
     respond_to do |format|
       format.html { render :index }
