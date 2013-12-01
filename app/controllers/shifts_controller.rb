@@ -89,6 +89,22 @@ class ShiftsController < ApplicationController
     end
   end
 
+  def clone
+  end
+
+  def do_clone
+    originals = Shift.where(':start >= ? AND :end >= ?', params[:from_start], params[:from_end])
+    originals.each do |shift|
+      Shift.create( {
+                      start: params[:to] + shift.start - params[:from_start],
+                      end: params[:to] + shift.end - params[:from_start],
+                      task: shift.task
+      } )
+    end
+
+    redirect_to action: :index
+  end
+
   def generate_ical
     cal = Icalendar::Calendar.new
     @shifts.each do |shift|

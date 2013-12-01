@@ -23,6 +23,7 @@
               <li><%= link_to 'View All', shifts_path %></li>
               <li><%= link_to 'View Open', open_shifts_path %></li>
               <li><%= link_to 'New', new_shift_path %></li>
+              <li><%= link_to 'Clone', clone_shifts_path %></li>
             </ul>
           </li>
           <li class="dropdown <%= 'active' if params[:controller] == 'tasks' %>">

@@ -6,6 +6,8 @@ Volunteers::Application.routes.draw do
     collection do
       get :open
       post :take
+      get :clone
+      post :clone, action: :do_clone
     end
   end
 
