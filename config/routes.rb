@@ -5,6 +5,7 @@ Volunteers::Application.routes.draw do
   resources :shifts do
     collection do
       get :open
+      post :take
     end
   end
 

@@ -80,6 +80,10 @@ class ShiftsController < ApplicationController
     end
   end
 
+  def take
+    puts params[:worker_ids]
+  end
+
   def generate_ical
     cal = Icalendar::Calendar.new
     @shifts.each do |shift|

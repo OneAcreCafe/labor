@@ -224,8 +224,10 @@ function tasksAddListener() {
                 } )
             } )[0]
         var ids = selected.map( function( d ) { return d.id } )
-        $('input[name="worker_ids[]"]').val( ids.join( ',' ) )
-        console.log( $('input[name="worker_ids[]"]').val() )
+        $('input[name="worker_ids[]"]')
+            .val( ids.join( ',' ) )
+            .parents( 'form' )
+            .submit()
     } )
 }
 
