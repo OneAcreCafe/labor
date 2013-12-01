@@ -12,7 +12,8 @@
 %p
   %b Task:
   = @shift.task.name if @shift.task
-- if can? :read, @shift.workers
+-# if can? :read, @shift.workers
+- if current_user.role?(:manager) || current_user.role?(:admin)
   %p
     %b Workers:
     %ul

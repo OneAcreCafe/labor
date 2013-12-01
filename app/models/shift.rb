@@ -5,8 +5,4 @@ class Shift < ActiveRecord::Base
   def needed
     (size || 0) - workers.count
   end
-
-  def workers
-    workers
-  end
 end
