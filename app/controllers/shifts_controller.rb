@@ -81,7 +81,9 @@ class ShiftsController < ApplicationController
   end
 
   def take
-    puts params[:worker_ids]
+    params[:worker_ids].each do |id|
+      puts id
+    end
   end
 
   def generate_ical

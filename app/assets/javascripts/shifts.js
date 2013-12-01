@@ -76,136 +76,138 @@ function renderShiftsCalendar() {
         } )
         .text(month)
     
-    d3.json( '/tasks.json', function( error, tasks ) {
-        var newTasks = {}
-        tasks.forEach( function( t ) { newTasks[t.id] = t } )
-        tasks = newTasks
-    
-        d3.json( window.location.pathname + '.json', function( error, shifts ) {
-            for( var i = 0; i < shifts.length; i++ ) {
-                shifts[i].start = new Date( Date.parse(shifts[i].start ) )
-                shifts[i].end = new Date( Date.parse(shifts[i].end ) )
-                shifts[i].day = {
-                    start: new Date(
-                        shifts[i].start.getFullYear(),
-                        shifts[i].start.getMonth(),
-                        shifts[i].start.getDate(),
-                        displayDay.start
-                    ),
-                    end: new Date(
-                        shifts[i].start.getFullYear(),
-                        shifts[i].start.getMonth(),
-                        shifts[i].start.getDate(),
-                        displayDay.end
-                    ),
+    if( svg.size() > 0 ) {
+        d3.json( '/tasks.json', function( error, tasks ) {
+            var newTasks = {}
+            tasks.forEach( function( t ) { newTasks[t.id] = t } )
+            tasks = newTasks
+            
+            d3.json( window.location.pathname + '.json', function( error, shifts ) {
+                for( var i = 0; i < shifts.length; i++ ) {
+                    shifts[i].start = new Date( Date.parse(shifts[i].start ) )
+                    shifts[i].end = new Date( Date.parse(shifts[i].end ) )
+                    shifts[i].day = {
+                        start: new Date(
+                            shifts[i].start.getFullYear(),
+                            shifts[i].start.getMonth(),
+                            shifts[i].start.getDate(),
+                            displayDay.start
+                        ),
+                        end: new Date(
+                            shifts[i].start.getFullYear(),
+                            shifts[i].start.getMonth(),
+                            shifts[i].start.getDate(),
+                            displayDay.end
+                        ),
+                    }
                 }
-            }
-            
-            // ToDo: Investigate scales for this computation: http://alignedleft.com/tutorials/d3/scales
-            function shiftHeight(shift) {
-                var dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
-                factor = cellSize / dayLength, // px/ms
-                shiftLength = shift.end.getTime() - shift.start.getTime()
-                return shiftLength * factor
-            }
-            
-            function shiftOffset(shift) {
-                var dayOffset = week(shift.start) * cellSize,
-                dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
-                factor = cellSize / dayLength, // px/ms
-                shiftOffset = shift.start.getTime() - shift.day.start.getTime()
-                return dayOffset + shiftOffset * factor
-            }
-
-            var nestedShifts = d3.nest()
-                .key(function(d) { return d.start.getTime() + "+" + (d.end.getTime() - d.start.getTime()) })
-                .entries(shifts)
-            
-            function iconWidth(d) {
-                return shiftHeight(d) * .9
-            }
-            
-            var shifts = svg.selectAll(".shift")
-                .data(nestedShifts)
-                .enter()
-                .append("g")
-                .attr( {
-                    class: 'shift',
-                    transform: function( d ) {
-                        return (
-                            "translate("
-                            + day( d.values[0].start ) * cellSize
-                            + ","
-                            + shiftOffset( d.values[0] )
-                            + ")"
-                        )
-                    }
-                } )
-            
-            shifts
-                .append("rect")
-                .attr( {
-                    class: 'shift',
-                    width: cellSize,
-                    height: function( d ) { return shiftHeight( d.values[0] ) },
-                    x: 0,
-                    y: 0,
-                } )
-
-            var icons = shifts.selectAll(".icon")
-                .data( function( d ) { return d.values } )
-                .enter()
-                .append( "g" )
-                .attr( {
-                    class: 'icon',
-                    transform: function( d, i ) {
-                        return (
-                            "translate("
-                            + (i * iconWidth( d ) * 1.1 + shiftPadding)
-                            + ","
-                            + shiftPadding
-                            + ")"
-                        )
-                    }
-                } )
-                .on( "click", function() {
-                    var selected = d3.select( this ).attr( "class" ).match( /selected/ )
-                    d3.select( this.parentNode ).selectAll( ".icon" ).attr( "class", "icon" )
-                    if( ! selected ) {
-                        d3.select( this ).attr( "class", "icon selected" )
-                    }
-                } )
-                .on( "dblclick", function( d ) {
-                    window.location = d.url
-                })
-
-            icons
-                .append( 'title' )
-                .text( function( d ) { return tasks[d.task_id] ? tasks[d.task_id].name : 'Unknown Type' } )
-
-            icons
-                .append("rect")
-                .attr( {
-                    class: 'icon bg',
-                    width: iconWidth,
-                    height: function( d ) { return shiftHeight( d ) - shiftPadding * 2 },
-                    x: 0,
-                    y: 0,
-                    rx: 5,
-                    ry: 5,
-                } )
-
-            icons
-                .append("svg:image")
-                .attr( {
-                    "xlink:href": function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null },
-                    width: function( d ) { return iconWidth( d ) - iconPadding * 2 },
-                    height: function( d ) { return shiftHeight( d ) - iconPadding * 2 - shiftPadding * 2 },
-                    x: iconPadding,
-                    y: iconPadding,
-                } )
+                
+                // ToDo: Investigate scales for this computation: http://alignedleft.com/tutorials/d3/scales
+                function shiftHeight(shift) {
+                    var dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
+                    factor = cellSize / dayLength, // px/ms
+                    shiftLength = shift.end.getTime() - shift.start.getTime()
+                    return shiftLength * factor
+                }
+                
+                function shiftOffset(shift) {
+                    var dayOffset = week(shift.start) * cellSize,
+                    dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
+                    factor = cellSize / dayLength, // px/ms
+                    shiftOffset = shift.start.getTime() - shift.day.start.getTime()
+                    return dayOffset + shiftOffset * factor
+                }
+                
+                var nestedShifts = d3.nest()
+                    .key(function(d) { return d.start.getTime() + "+" + (d.end.getTime() - d.start.getTime()) })
+                    .entries(shifts)
+                
+                function iconWidth(d) {
+                    return shiftHeight(d) * .9
+                }
+                
+                var shifts = svg.selectAll(".shift")
+                    .data(nestedShifts)
+                    .enter()
+                    .append("g")
+                    .attr( {
+                        class: 'shift',
+                        transform: function( d ) {
+                            return (
+                                "translate("
+                                    + day( d.values[0].start ) * cellSize
+                                    + ","
+                                    + shiftOffset( d.values[0] )
+                                    + ")"
+                            )
+                        }
+                    } )
+                
+                shifts
+                    .append("rect")
+                    .attr( {
+                        class: 'shift',
+                        width: cellSize,
+                        height: function( d ) { return shiftHeight( d.values[0] ) },
+                        x: 0,
+                        y: 0,
+                    } )
+                
+                var icons = shifts.selectAll(".icon")
+                    .data( function( d ) { return d.values } )
+                    .enter()
+                    .append( "g" )
+                    .attr( {
+                        class: 'icon',
+                        transform: function( d, i ) {
+                            return (
+                                "translate("
+                                    + (i * iconWidth( d ) * 1.1 + shiftPadding)
+                                    + ","
+                                    + shiftPadding
+                                    + ")"
+                            )
+                        }
+                    } )
+                    .on( "click", function() {
+                        var selected = d3.select( this ).attr( "class" ).match( /selected/ )
+                        d3.select( this.parentNode ).selectAll( ".icon" ).attr( "class", "icon" )
+                        if( ! selected ) {
+                            d3.select( this ).attr( "class", "icon selected" )
+                        }
+                    } )
+                    .on( "dblclick", function( d ) {
+                        window.location = d.url
+                    })
+                
+                icons
+                    .append( 'title' )
+                    .text( function( d ) { return tasks[d.task_id] ? tasks[d.task_id].name : 'Unknown Type' } )
+                
+                icons
+                    .append("rect")
+                    .attr( {
+                        class: 'icon bg',
+                        width: iconWidth,
+                        height: function( d ) { return shiftHeight( d ) - shiftPadding * 2 },
+                        x: 0,
+                        y: 0,
+                        rx: 5,
+                        ry: 5,
+                    } )
+                
+                icons
+                    .append("svg:image")
+                    .attr( {
+                        "xlink:href": function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null },
+                        width: function( d ) { return iconWidth( d ) - iconPadding * 2 },
+                        height: function( d ) { return shiftHeight( d ) - iconPadding * 2 - shiftPadding * 2 },
+                        x: iconPadding,
+                        y: iconPadding,
+                    } )
+            } )
         } )
-    } )
+    }
     setTimeout( function() {
         window.scrollTo( 0, week( new Date() ) * cellSize * .93 )
     }, 10 )
@@ -224,10 +226,14 @@ function tasksAddListener() {
                 } )
             } )[0]
         var ids = selected.map( function( d ) { return d.id } )
-        $('input[name="worker_ids[]"]')
-            .val( ids.join( ',' ) )
-            .parents( 'form' )
-            .submit()
+        var $form = $('#shifts-form form')
+        ids.forEach( function( id ) {
+            $form.append( $('<input/>')
+                          .attr( { name: 'worker_ids[]' } )
+                          .val( id )
+                        )
+        } )
+        $form.submit()
     } )
 }
 
