@@ -192,8 +192,12 @@ function renderShiftsCalendar() {
                             )
                         }
                     } )
+                    .classed( 'taken', function( d ) { console.log( d.taken ); return d.taken } )
                     .on( "click", function() {
-                        var selected = d3.select( this ).attr( "class" ).match( /selected/ )
+                        if( $(this).parent().children().hasClass( 'taken' ).size() > 0 ) {
+                            return
+                        }
+                        var selected = d3.select( this ).classed( 'selected' )
                         d3.select( this.parentNode ).selectAll( ".icon" ).attr( "class", "icon" )
                         if( ! selected ) {
                             d3.select( this ).attr( "class", "icon selected" )
