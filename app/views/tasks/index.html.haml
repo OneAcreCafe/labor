@@ -6,14 +6,15 @@
     %th Description
     %th Icon
     %th
-    %th
-    %th
 
   - @tasks.each do |task|
     %tr
       %td= task.name
       %td= task.description
       %td= image_tag task.icon, class: :icon
-      %td= link_to 'Show', task
-      %td= link_to 'Edit', edit_task_path(task)
-      %td= link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td
+        = link_to 'Show', task, class: [:btn, 'btn-default']
+        - if can? :update, task
+          = link_to 'Edit', edit_task_path(task), class: [:btn, 'btn-default']
+        - if can? :destroy, task
+          = link_to 'Destroy', task, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
