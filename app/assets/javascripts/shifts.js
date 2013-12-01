@@ -37,16 +37,38 @@ function renderShiftsCalendar() {
     
     var days = svg.selectAll(".day")
         .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)) })
-        .enter().append("rect")
+        .enter()
+        .append("g")
         .attr("class", "day")
+        .attr("transform", function( d ) {
+            console.log( day( d ) )
+            return (
+                "translate("
+                + day( d ) * cellSize
+                + ","
+                + week( d ) * cellSize
+                + ")"
+            )
+        } )
+
+    days
+        .append("rect")
         .attr("width", cellSize)
         .attr("height", cellSize)
-        .attr("x", function(d) { return day(d) * cellSize })
-        .attr("y", function(d) { return week(d) * cellSize })
-        .datum(format)
     
-    days.append("title")
-        .text(function(d) { return d })
+    days
+        .append("text")
+        .attr( {
+            class: 'date',
+            x: 10,
+            y: 30,
+        } )
+        .text( function( d ) { return d.getDate() } )
+
+    days
+        .datum(format)
+        .append("title")
+        .text( function( d ) { return d } )
     
     function monthPath(t0) {
         var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
@@ -239,3 +261,5 @@ function tasksAddListener() {
 
 $(document).on( 'page:load', tasksAddListener )
 $(document).ready( tasksAddListener )
+
+$.fn.datepicker.defaults.format = 'd/m/yyyy'

@@ -93,11 +93,16 @@ class ShiftsController < ApplicationController
   end
 
   def do_clone
-    originals = Shift.where(':start >= ? AND :end >= ?', params[:from_start], params[:from_end])
+    from_start = DateTime.strptime( params[:from][:start], '%d/%m/%Y' )
+    from_end = DateTime.strptime( params[:from][:end], '%d/%m/%Y' )
+    to_start = DateTime.strptime( params[:to][:start], '%d/%m/%Y' )
+
+    originals = Shift.where('start >= ? AND start <= ?', from_start, from_end)
+    puts originals.count
     originals.each do |shift|
       Shift.create( {
-                      start: params[:to] + shift.start - params[:from_start],
-                      end: params[:to] + shift.end - params[:from_start],
+                      start: to_start + (shift.start - from_start),
+                      end: to_start + (shift.start - from_start),
                       task: shift.task
       } )
     end
