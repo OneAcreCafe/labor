@@ -81,7 +81,7 @@ function renderShiftsCalendar() {
         tasks.forEach( function( t ) { newTasks[t.id] = t } )
         tasks = newTasks
     
-        d3.json( '/shifts.json', function( error, shifts ) {
+        d3.json( window.location.pathname + '.json', function( error, shifts ) {
             for( var i = 0; i < shifts.length; i++ ) {
                 shifts[i].start = new Date( Date.parse(shifts[i].start ) )
                 shifts[i].end = new Date( Date.parse(shifts[i].end ) )
@@ -176,13 +176,12 @@ function renderShiftsCalendar() {
                     }
                 } )
                 .on( "dblclick", function( d ) {
-                    console.log( d )
                     window.location = d.url
                 })
 
             icons
                 .append( 'title' )
-                .text( function( d ) { return tasks[d.task_id].name } )
+                .text( function( d ) { return tasks[d.task_id] ? tasks[d.task_id].name : 'Unknown Type' } )
 
             icons
                 .append("rect")
@@ -199,7 +198,7 @@ function renderShiftsCalendar() {
             icons
                 .append("svg:image")
                 .attr( {
-                    "xlink:href": function( d ) { return tasks[d.task_id].icon },
+                    "xlink:href": function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null },
                     width: function( d ) { return iconWidth( d ) - iconPadding * 2 },
                     height: function( d ) { return shiftHeight( d ) - iconPadding * 2 - shiftPadding * 2 },
                     x: iconPadding,
@@ -215,3 +214,20 @@ function renderShiftsCalendar() {
 // Load on turbolinks page change
 $(document).on( 'page:load', renderShiftsCalendar )
 $(document).ready( renderShiftsCalendar )
+
+function tasksAddListener() {
+    $('#take-shifts').click( function() {
+        var selected = d3.selectAll( '.icon.selected' )
+            .map( function( selection ) {
+                return selection.map( function( d ) {
+                    return d3.select( d ).data()[0]
+                } )
+            } )[0]
+        var ids = selected.map( function( d ) { return d.id } )
+        $('input[name="worker_ids[]"]').val( ids.join( ',' ) )
+        console.log( $('input[name="worker_ids[]"]').val() )
+    } )
+}
+
+$(document).on( 'page:load', tasksAddListener )
+$(document).ready( tasksAddListener )

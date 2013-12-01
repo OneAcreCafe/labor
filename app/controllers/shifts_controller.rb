@@ -15,6 +15,17 @@ class ShiftsController < ApplicationController
     end
   end
 
+  def open
+    @shifts = Shift.all.select{ |s| s.needed > 0 }
+
+    respond_to do |format|
+      format.html { render :index }
+      format.xml  { render :xml => @shifts }
+      format.ics  { render :text => self.generate_ical }
+      format.json { render :index }
+    end
+  end
+
   # GET /shifts/1
   # GET /shifts/1.json
   def show

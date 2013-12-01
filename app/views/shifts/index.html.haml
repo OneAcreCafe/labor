@@ -22,6 +22,11 @@
 
 %br
 
-= link_to 'New Shift', new_shift_path
+= link_to 'New Shift', new_shift_path, class: [:btn, :'btn-default']
+
+%button#take-shifts.btn.btn-default Take Shifts
+
+= form_tag do
+  = hidden_field :worker_ids, ''
 
 #shifts
