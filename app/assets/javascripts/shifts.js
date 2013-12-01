@@ -41,7 +41,6 @@ function renderShiftsCalendar() {
         .append("g")
         .attr("class", "day")
         .attr("transform", function( d ) {
-            console.log( day( d ) )
             return (
                 "translate("
                 + day( d ) * cellSize
@@ -104,7 +103,9 @@ function renderShiftsCalendar() {
             tasks.forEach( function( t ) { newTasks[t.id] = t } )
             tasks = newTasks
             
-            d3.json( window.location.pathname + '.json', function( error, shifts ) {
+            var url = window.location.pathname
+            url = ( url.length > 1 ? url : 'shifts' ) + '.json'
+            d3.json( url, function( error, shifts ) {
                 for( var i = 0; i < shifts.length; i++ ) {
                     shifts[i].start = new Date( Date.parse(shifts[i].start ) )
                     shifts[i].end = new Date( Date.parse(shifts[i].end ) )
