@@ -1,6 +1,8 @@
 class ShiftsController < ApplicationController
-  before_action :set_shift, only: [:show, :edit, :update, :destroy]
+  # before_action :set_shift, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:index, :show, :open]
+  load_and_authorize_resource
+  skip_authorize_resource only: [:open, :take]
 
   # GET /shifts
   # GET /shifts.json
@@ -82,10 +84,12 @@ class ShiftsController < ApplicationController
 
   def take
     @shifts = []
-    params[:worker_ids].each do |id|
-      shift = Shift.find(id)
-      shift.workers << current_user
-      @shifts << shift
+    if params[:worker_ids]
+      params[:worker_ids].each do |id|
+        shift = Shift.find(id)
+        shift.workers << current_user
+        @shifts << shift
+      end
     end
   end
 

@@ -8,8 +8,11 @@ class Ability
       can :manage, :all
     else
       can :read, :all
+
       if user.role? :manager
         can :manage, [Shift, Task]
+      else
+        cannot :read, Shift.workers  
       end
     end
   end

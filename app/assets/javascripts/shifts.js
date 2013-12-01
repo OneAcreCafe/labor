@@ -104,7 +104,7 @@ function renderShiftsCalendar() {
             tasks = newTasks
             
             var url = window.location.pathname
-            url = ( url.length > 1 ? url : 'shifts' ) + '.json'
+            url = ( url.length > 1 ? url : '/shifts/open' ) + '.json'
             d3.json( url, function( error, shifts ) {
                 for( var i = 0; i < shifts.length; i++ ) {
                     shifts[i].start = new Date( Date.parse(shifts[i].start ) )
@@ -232,7 +232,7 @@ function renderShiftsCalendar() {
         } )
     }
     setTimeout( function() {
-        window.scrollTo( 0, week( new Date() ) * cellSize * .93 )
+        window.scrollTo( 0, week( new Date() ) * cellSize * .88 )
     }, 10 )
 }
 
@@ -256,7 +256,9 @@ function tasksAddListener() {
                           .val( id )
                         )
         } )
-        $form.submit()
+        if( ids.length > 0 ) {
+            $form.submit()
+        }
     } )
 }
 
