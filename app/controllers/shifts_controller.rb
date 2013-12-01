@@ -2,7 +2,7 @@ class ShiftsController < ApplicationController
   # before_action :set_shift, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_user!, except: [:index, :show, :open]
   load_and_authorize_resource
-  skip_authorize_resource only: [:open, :take, :taken]
+  skip_authorize_resource only: [:open, :take]
 
   # GET /shifts
   # GET /shifts.json
@@ -106,11 +106,6 @@ class ShiftsController < ApplicationController
     originals = Shift.where('start >= ? AND start <= ?', from_start, from_end)
     puts originals.count
     originals.each do |shift|
-      puts 'To: ' + to_start.to_s
-      puts 'From: ' + from_start.to_s
-      puts 'Start: ' + shift.start.to_s
-      puts (shift.start - from_start)
-      puts to_start + (shift.start.to_datetime - from_start)
       new = shift.dup
       new.workers = []
       new.start = to_start + (shift.start.to_datetime - from_start)
