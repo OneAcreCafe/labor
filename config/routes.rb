@@ -2,7 +2,10 @@ Volunteers::Application.routes.draw do
   resources :roles
 
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"},
-             controllers: {omniauth_callbacks: "omniauth_callbacks"}
+    controllers: {
+      omniauth_callbacks: "omniauth_callbacks",
+      registrations: "registrations"
+    }
 
   resources :shifts do
     collection do
@@ -19,7 +22,7 @@ Volunteers::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'shifts#index'
+  root 'shifts#open'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
