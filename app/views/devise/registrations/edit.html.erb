@@ -21,6 +21,13 @@
     <%= f.password_field :current_password %></div>
   <% end %>
 
+  <% if can? :update, resource.roles %>
+    <div>
+      <%= f.label :roles %>
+      <%= f.collection_select :roles, Role.all, :id, :name, { prompt: "Roles" , :selected => resource.roles.collect(&:id) }, { multiple: true } %>
+    </div>
+  <% end %>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
 

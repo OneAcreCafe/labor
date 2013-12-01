@@ -40,6 +40,7 @@ gem 'bootstrap-sass-rails'
 gem 'bootstrap-datepicker-rails'
 
 gem 'devise'
+gem 'cancan'
 gem 'omniauth-facebook', '= 1.4.0'
 gem 'omniauth-twitter'
 
