@@ -14,4 +14,9 @@ class ApplicationController < ActionController::Base
     flash[:alert] = "Access denied."
     redirect_to new_user_registration_url
   end
+
+  # https://github.com/plataformatec/devise/wiki/How-To%3A-redirect-to-a-specific-page-on-successful-sign-in
+  def after_sign_in_path_for(resource)
+    request.env['omniauth.origin'] || stored_location_for(resource) || root_path
+  end
 end

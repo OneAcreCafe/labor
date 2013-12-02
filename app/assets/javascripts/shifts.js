@@ -13,6 +13,8 @@ function renderShiftsCalendar() {
         percent = d3.format(".1%"),
         format = d3.time.format("%Y-%m-%d")
     
+    var pageScale = .9  // ratio of width
+
     var displayDay = {
         start: 9, // Start hour for block
         end: 14 // End hour
@@ -26,7 +28,7 @@ function renderShiftsCalendar() {
         .attr("viewBox", "0 0 " + width + " " + height)
         .attr("preserveAspectRatio", "none")
         .attr("width", "100%")
-        .attr("height", height * .9) // eyeballing
+        .attr("height", height * pageScale)
         .append("g")
         .attr("transform", "translate(" + position.x + "," + position.y + ")")
     
@@ -235,7 +237,7 @@ function renderShiftsCalendar() {
         } )
     }
     setTimeout( function() {
-        window.scrollTo( 0, week( new Date() ) * cellSize * .88 )
+        window.scrollTo( 0, week( new Date() ) * cellSize * pageScale )
     }, 10 )
 }
 

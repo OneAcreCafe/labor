@@ -4,6 +4,13 @@
   %b Name:
   = @role.name
 
-= link_to 'Edit', edit_role_path(@role)
-\|
-= link_to 'Back', roles_path
+- if can? :read, User
+  %p
+    %b Users:
+    %ul
+      - @role.users.each do |user|
+        %li= user.email
+
+- if can? :update, @role
+  = link_to 'Edit', edit_role_path(@role), class: [:btn, 'btn-default']
+= link_to 'Back', roles_path, class: [:btn, 'btn-default']

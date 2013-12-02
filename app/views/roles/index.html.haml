@@ -1,19 +1,19 @@
-%h1 Listing roles
+%h1 Listing Roles
 
 %table
   %tr
     %th Name
     %th
-    %th
-    %th
 
   - @roles.each do |role|
     %tr
       %td= role.name
-      %td= link_to 'Show', role
-      %td= link_to 'Edit', edit_role_path(role)
-      %td= link_to 'Destroy', role, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td
+        = link_to 'Show', role, class: [:btn, 'btn-default']
+        - if can? :update, role
+          = link_to 'Edit', edit_role_path(role), class: [:btn, 'btn-default']
+        - if can? :destroy, role
+          = link_to 'Delete', role, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
 
-%br
-
-= link_to 'New Role', new_role_path
+- if can? :create, Role
+  = link_to 'New Role', new_role_path, class: [:btn, 'btn-default']

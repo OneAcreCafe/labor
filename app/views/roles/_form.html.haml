@@ -9,5 +9,8 @@
   .field
     = f.label :name
     = f.text_field :name
+  .field
+    = f.label :users
+    = f.collection_select :user_ids, User.all, :id, :email, { :selected => @role.users.collect(&:id) }, { multiple: true }
   .actions
     = f.submit 'Save'

@@ -13,7 +13,7 @@
   %b Task:
   = @shift.task.name if @shift.task
 -# if can? :read, @shift.workers
-- if current_user && (current_user.role?(:manager) || current_user.role?(:admin))
+- if can? :read, User
   %p
     %b Workers:
     - if @shift.workers.count == 0
@@ -23,7 +23,7 @@
         - @shift.workers.each do |worker|
           %li= worker.email
 
-- if current_user && @shift.worker?(current_user)
+- if @shift.worker?(current_user)
   %p You are signed up for this shift
 
 - if can? :destroy, @shift

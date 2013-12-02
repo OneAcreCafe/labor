@@ -37,6 +37,9 @@
               <% end %>
             </ul>
           </li>
+          <% if current_user.try(:role?, :admin) %>
+            <li><%= link_to 'Roles', roles_path %></li>
+          <% end %>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <% if user_signed_in? %>

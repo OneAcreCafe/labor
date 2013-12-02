@@ -12,6 +12,7 @@ class Ability
       if user.role? :manager
         can :manage, [Shift, Task]
       else
+        cannot :read, User
       end
     end
   end
