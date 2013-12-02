@@ -17,7 +17,7 @@ function renderShiftsCalendar() {
 
     var displayDay = {
         start: 9, // Start hour for block
-        end: 14 // End hour
+        end: 15 // End hour
     },
         shiftPadding = cellSize * .02,
         iconPadding = cellSize * .02 
