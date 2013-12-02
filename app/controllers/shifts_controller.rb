@@ -61,7 +61,6 @@ class ShiftsController < ApplicationController
   # PATCH/PUT /shifts/1
   # PATCH/PUT /shifts/1.json
   def update
-    puts shift_params
     respond_to do |format|
       if @shift.update(shift_params)
         format.html { redirect_to @shift, notice: 'Shift was successfully updated.' }
@@ -142,12 +141,8 @@ class ShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_params
-      shift_params = params.require(:shift).permit(:start, :end, :size, :task_id, workers: [])
-      workers = []
-      shift_params[:workers].each do |id|
-        workers << User.find(id) if not id.empty?
-      end
-      shift_params[:workers] = workers
+      shift_params = params.require(:shift).permit(:start, :end, :size, :task_id, worker_ids: [])
+      # shift_params[:workers] = shift_params[:workers].try(:map) { |id| User.find(id) if not id.empty? }.compact
       shift_params
     end
 end
