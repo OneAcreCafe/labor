@@ -193,7 +193,7 @@ function renderShiftsCalendar() {
                     } )
                     .classed( 'taken', function( d ) { return d.taken } )
                     .on( "click", function() {
-                        if( d3.select( this.parentNode ).selectAll( '.icon' ).classed( 'taken' ) ) {
+                        if( d3.select( this.parentNode ).selectAll( '.icon.taken' ).size() > 0 ) {
                             return
                         }
                         var selected = d3.select( this ).classed( 'selected' )
