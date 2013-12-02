@@ -9,6 +9,7 @@ function renderShiftsCalendar() {
     
     var day = d3.time.format("%w"),
         week = d3.time.format("%U"),
+        hour = d3.time.format("%H"),
         month = d3.time.format("%B"),
         percent = d3.format(".1%"),
         format = d3.time.format("%Y-%m-%d")
@@ -210,7 +211,10 @@ function renderShiftsCalendar() {
                 
                 icons
                     .append( 'title' )
-                    .text( function( d ) { return tasks[d.task_id] ? tasks[d.task_id].name : 'Unknown Type' } )
+                    .text( function( d ) {
+                        var name = tasks[d.task_id] ? tasks[d.task_id].name : 'Unknown Type'
+                        return name + " from " + hour(d.start) + " to " + hour(d.end) + " (×" + d.needed + ")"
+                    } )
                 
                 icons
                     .append("rect")
