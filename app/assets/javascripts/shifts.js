@@ -195,8 +195,11 @@ function renderShiftsCalendar() {
                         }
                     } )
                     .classed( 'taken', function( d ) { return d.taken } )
-                    .on( "click", function() {
+                    .on( "click", function( d ) {
                         if( d3.select( this.parentNode ).selectAll( '.icon.taken' ).size() > 0 ) {
+                            return
+                        }
+                        if( d.needed <= 0 ) {
                             return
                         }
                         var selected = d3.select( this ).classed( 'selected' )
@@ -204,6 +207,7 @@ function renderShiftsCalendar() {
                         if( ! selected ) {
                             d3.select( this ).classed( 'selected', true )
                         }
+                        $(document).trigger( 'selection-changed' )
                     } )
                     .on( "dblclick", function( d ) {
                         window.location = d.url
@@ -250,25 +254,34 @@ $(document).on( 'page:load', renderShiftsCalendar )
 $(document).ready( renderShiftsCalendar )
 
 function tasksAddListener() {
-    $('#take-shifts').click( function() {
-        var selected = d3.selectAll( '.icon.selected' )
-            .map( function( selection ) {
-                return selection.map( function( d ) {
-                    return d3.select( d ).data()[0]
-                } )
-            } )[0]
-        var ids = selected.map( function( d ) { return d.id } )
-        var $form = $('#shifts-form form')
-        ids.forEach( function( id ) {
-            $form.append( $('<input/>')
-                          .attr( { name: 'worker_ids[]' } )
-                          .val( id )
-                        )
+    $('#take-shifts')
+        .click( function() {
+            var selected = d3.selectAll( '.icon.selected' )
+                .map( function( selection ) {
+                    return selection.map( function( d ) {
+                        return d3.select( d ).data()[0]
+                    } )
+                } )[0]
+            var ids = selected.map( function( d ) { return d.id } )
+            var $form = $('#shifts-form form')
+            ids.forEach( function( id ) {
+                $form.append( $('<input/>')
+                              .attr( { name: 'worker_ids[]' } )
+                              .val( id )
+                            )
+            } )
+            if( ids.length > 0 ) {
+                $form.submit()
+            }
         } )
-        if( ids.length > 0 ) {
-            $form.submit()
+    $(document).on( 'selection-changed', function() {
+        if( $('.selected').size() > 0 ) {
+            $('#take-shifts').removeClass( 'disabled' )
+        } else {
+            $('#take-shifts').addClass( 'disabled' )
         }
     } )
+
 }
 
 $(document).on( 'page:load', tasksAddListener )

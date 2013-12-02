@@ -1,9 +1,8 @@
 - if params[:layout] == 'table'
   = render 'table'
 - else
-  - if params[:action] == 'open' && current_user
-    %button#take-shifts.btn.btn-default.btn-primary Take Shifts
+  %button#take-shifts.btn.btn-default.btn-primary.disabled Take Shifts
 
-    #shifts-form= form_tag take_shifts_path
+  #shifts-form= form_tag take_shifts_path
 
   #shifts
