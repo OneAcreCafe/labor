@@ -141,8 +141,6 @@ class ShiftsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shift_params
-      shift_params = params.require(:shift).permit(:start, :end, :size, :task_id, worker_ids: [])
-      # shift_params[:workers] = shift_params[:workers].try(:map) { |id| User.find(id) if not id.empty? }.compact
-      shift_params
+      params.require(:shift).permit(:start, :end, :size, :task_id, worker_ids: [])
     end
 end

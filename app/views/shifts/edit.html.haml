@@ -1,7 +1,6 @@
-%h1 Editing shift
+%h1 Editing Shift
 
 = render 'form'
 
-= link_to 'Show', @shift
-\|
-= link_to 'Back', shifts_path
+= link_to 'Show', @shift, class: [:btn, 'btn-default']
+= link_to 'Back', shifts_path, class: [:btn, 'btn-default']

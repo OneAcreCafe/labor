@@ -20,6 +20,6 @@
     = f.collection_select :task_id, Task.all, :id, :name, { prompt: "Task" , :selected => @shift.task ? @shift.task.id : nil }
   .field
     = f.label :workers
-    = f.collection_select :worker_ids, User.all, :id, :email, { prompt: "Workers" , :selected => @shift.workers.collect(&:id) }, { multiple: true }
+    = f.collection_select :worker_ids, User.all, :id, :email, { :selected => @shift.workers.collect(&:id) }, { multiple: true }
   .actions
     = f.submit 'Save'
