@@ -17,6 +17,14 @@ class ApplicationController < ActionController::Base
 
   # https://github.com/plataformatec/devise/wiki/How-To%3A-redirect-to-a-specific-page-on-successful-sign-in
   def after_sign_in_path_for(resource)
+    if session[:desired_shifts]
+      session[:desired_shifts].try(:each) do |id|
+        shift = Shift.find(id)
+        shift.workers << current_user
+      end
+      session[:desired_shifts] = nil
+    end
+
     request.env['omniauth.origin'] || stored_location_for(resource) || root_path
   end
 end

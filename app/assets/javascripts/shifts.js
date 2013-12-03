@@ -266,7 +266,7 @@ function tasksAddListener() {
             var $form = $('#shifts-form form')
             ids.forEach( function( id ) {
                 $form.append( $('<input/>')
-                              .attr( { name: 'worker_ids[]' } )
+                              .attr( { name: 'shift_ids[]' } )
                               .val( id )
                             )
             } )

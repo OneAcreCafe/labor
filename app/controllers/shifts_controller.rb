@@ -1,6 +1,6 @@
 class ShiftsController < ApplicationController
   # before_action :set_shift, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, except: [:index, :show, :open]
+  before_filter :authenticate_user!, except: [:index, :show, :open, :take]
   load_and_authorize_resource
   skip_authorize_resource only: [:open, :take]
 
@@ -83,13 +83,16 @@ class ShiftsController < ApplicationController
   end
 
   def take
+    if not current_user
+      session[:desired_shifts] = params[:shift_ids]
+      authenticate_user!
+    end
+
     @shifts = []
-    if params[:worker_ids]
-      params[:worker_ids].each do |id|
-        shift = Shift.find(id)
-        shift.workers << current_user
-        @shifts << shift
-      end
+    params[:shift_ids].try(:each) do |id|
+      shift = Shift.find(id)
+      shift.workers << current_user
+      @shifts << shift
     end
   end
 
