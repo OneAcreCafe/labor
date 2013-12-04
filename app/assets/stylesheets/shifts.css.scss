@@ -60,3 +60,26 @@ text.label {
     top: 5em;
     right: 1em;
 }
+
+
+.day {
+    border: 1px solid;
+}
+
+#shifts {
+    width: 100%;
+    display: table;
+}
+
+.week {
+    display: table-row;
+    min-height: 1em;
+}
+
+.day {
+    display: table-cell;
+}
+
+.hour {
+    min-height: 1em;
+}

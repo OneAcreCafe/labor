@@ -1,133 +1,119 @@
 function renderShiftsCalendar() {
-    var width = window.innerWidth,
-        cellSize = width / 8,
-        height = cellSize * 53.75,
-        position = {
-            x: (width - cellSize * 7) / 2,
-            y: cellSize * .75
-        }
+    var day = d3.time.format( '%-d' ),
+        weekday = d3.time.format( '%w' ),
+        week = d3.time.format( '%U' ),
+        hour = d3.time.format( '%H' ),
+        month = d3.time.format( '%B' ),
+        year = d3.time.format( '%Y' ),
+        monthNumber = d3.time.format( '%m' ),
+        percent = d3.format( '.1%' ),
+        format = d3.time.format( '%Y-%m-%d' )
     
-    var day = d3.time.format("%w"),
-        week = d3.time.format("%U"),
-        hour = d3.time.format("%H"),
-        month = d3.time.format("%B"),
-        percent = d3.format(".1%"),
-        format = d3.time.format("%Y-%m-%d")
-    
-    var pageScale = .9  // ratio of width
-
-    var displayDay = {
-        start: 9, // Start hour for block
-        end: 15 // End hour
-    },
-        shiftPadding = cellSize * .02,
-        iconPadding = cellSize * .02 
-    
-    var svg = d3.select("#shifts").selectAll("svg")
-        .data(d3.range(2013, 2015))
-        .enter().append("svg")
-        .attr("viewBox", "0 0 " + width + " " + height)
-        .attr("preserveAspectRatio", "none")
-        .attr("width", "100%")
-        .attr("height", height * pageScale)
-        .append("g")
-        .attr("transform", "translate(" + position.x + "," + position.y + ")")
-    
-    svg.append("text")
-        .attr("transform", "translate(" + (width / 2) + "," + (-cellSize / 5) + ")")
-        .style("text-anchor", "middle")
-        .text(function(d) { return d })
-    
-    var days = svg.selectAll(".day")
-        .data(function(d) { return d3.time.days(new Date(d, 0, 1), new Date(d + 1, 0, 1)) })
-        .enter()
-        .append("g")
-        .attr("class", "day")
-        .attr("transform", function( d ) {
-            return (
-                "translate("
-                + day( d ) * cellSize
-                + ","
-                + week( d ) * cellSize
-                + ")"
-            )
-        } )
-
-    days
-        .append("rect")
-        .attr("width", cellSize)
-        .attr("height", cellSize)
-    
-    days
-        .append("text")
-        .attr( {
-            class: 'date',
-            x: 10,
-            y: 30,
-        } )
-        .text( function( d ) { return d.getDate() } )
-
-    days
-        .datum(format)
-        .append("title")
-        .text( function( d ) { return d } )
-    
-    function monthPath(t0) {
-        var t1 = new Date(t0.getFullYear(), t0.getMonth() + 1, 0),
-        d0 = +day(t0), w0 = +week(t0),
-        d1 = +day(t1), w1 = +week(t1)
-        return "M" + d0 * cellSize + "," + (w0 + 1) * cellSize
-          + " V" + w0 * cellSize + " H" + 7 * cellSize
-            + " V" + w1 * cellSize + " H" + (d1 + 1) * cellSize
-            + " V" + (w1 + 1) * cellSize + " H" + 0
-            + " V" + (w0 + 1) * cellSize + " Z"
-    }
-    
-    var months = function(d) { return d3.time.months(new Date(d, 0, 1), new Date(d + 1, 0, 1)) }
-    
-    svg.selectAll(".month")
-        .data(months)
-        .enter().append("path")
-        .attr("class", "month")
-        .attr("d", monthPath)
-    
-    svg.selectAll(".label")
-        .data(months)
-        .enter().append("text")
-        .attr("class", "label")
-        .attr("transform", function(month) {
-            return "translate(" + (7 * cellSize) + "," + (week(month) * cellSize) + ")rotate(90)"
-        } )
-        .text(month)
-    
-    if( svg.size() > 0 ) {
-        d3.json( '/tasks.json', function( error, tasks ) {
-            var newTasks = {}
-            tasks.forEach( function( t ) { newTasks[t.id] = t } )
-            tasks = newTasks
+    d3.json( '/tasks.json', function( error, tasks ) {
+        var newTasks = {}
+        tasks.forEach( function( t ) { newTasks[t.id] = t } )
+        tasks = newTasks
+        
+        var url = window.location.pathname
+        url = ( url.length > 1 ? url : '/shifts/open' ) + '.json'
+        d3.json( url, function( error, shifts ) {
+            for( var i = 0; i < shifts.length; i++ ) {
+                shifts[i].start = new Date( Date.parse(shifts[i].start ) )
+                shifts[i].end = new Date( Date.parse(shifts[i].end ) )
+            }
             
-            var url = window.location.pathname
-            url = ( url.length > 1 ? url : '/shifts/open' ) + '.json'
-            d3.json( url, function( error, shifts ) {
-                for( var i = 0; i < shifts.length; i++ ) {
-                    shifts[i].start = new Date( Date.parse(shifts[i].start ) )
-                    shifts[i].end = new Date( Date.parse(shifts[i].end ) )
-                    shifts[i].day = {
-                        start: new Date(
-                            shifts[i].start.getFullYear(),
-                            shifts[i].start.getMonth(),
-                            shifts[i].start.getDate(),
-                            displayDay.start
-                        ),
-                        end: new Date(
-                            shifts[i].start.getFullYear(),
-                            shifts[i].start.getMonth(),
-                            shifts[i].start.getDate(),
-                            displayDay.end
-                        ),
+            var start = d3.min( shifts, function( d ) { return d.start } )
+            var end = d3.max( shifts, function( d ) { return d.end } )
+            
+            if( weekday( start ) != 0 ) { // Interval only includes dates in bounds
+                start.setDate( start.getDate() - 7 )
+            }
+
+            console.log( shifts, start, end, d3.time.mondays( start, end ) )
+
+            var weeks = d3.select( '#shifts' ).selectAll('.week')
+                .data( function( d ) { return d3.time.weeks( start, end ) } )
+                .enter()
+                .append( 'div' )
+                .attr( {
+                    class: 'week',
+                    week: week,
+                    month: monthNumber,
+                    year: year,
+                } )
+            
+            var weekBounds = d3.nest()
+                .key( function( d ) { return week( d.start ) } )
+                .rollup( function( d ) {
+                    return {
+                        start: d3.min( d, function( d ) { return d.start.getHours() } ),
+                        end: d3.max( d, function( d ) { return d.end.getHours() } ),
                     }
-                }
-                
+                } )
+                .map( shifts )
+ 
+            console.log( weekBounds )
+
+            var days = weeks.selectAll( '.day' )
+                .data( function( d ) {
+                    var end = new Date( d )
+                    end.setDate( d.getDate() + 7 )
+                    return d3.time.days( d, end )
+                } )
+                .enter()
+                .append( 'div' )
+                .attr( {
+                    class: 'day',
+                    day: day
+                } )
+
+            var titles = days
+                .append( 'div' )
+                .attr( {
+                    class: 'title',
+                } )
+                .text( day )
+            
+            
+            var hours = days.selectAll( '.hour' )
+                .data( function( d ) {
+                    if( weekBounds[week( d )] ) {
+                        var start = new Date( d.getTime() ),
+                            end = new Date( d.getTime() )
+                        start.setHours( weekBounds[week( d )].start )
+                        end.setHours( weekBounds[week( d )].end )
+
+                        return d3.time.hours( start, end )
+                    }
+                    return []
+                } )
+                .enter()
+                .append( 'div' )
+                .attr( {
+                    class: 'hour',
+                    hour: hour
+                } )
+
+
+            //weeks.filter(
+            
+
+            d3.csv("dji.csv", function(error, csv) {
+                var data = d3.nest()
+                    .key(function(d) { return d.Date; })
+                    .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
+                    .map(csv);
+
+                console.log( csv, data )
+
+                rect.filter(function(d) { return d in data; })
+                    .attr("class", function(d) { return "day " + color(data[d]); })
+                    .select("title")
+                    .text(function(d) { return d + ": " + percent(data[d]); });
+            });
+        
+            return
+            
                 // ToDo: Investigate scales for this computation: http://alignedleft.com/tutorials/d3/scales
                 function shiftHeight(shift) {
                     var dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
@@ -243,10 +229,7 @@ function renderShiftsCalendar() {
                     } )
             } )
         } )
-    }
-    setTimeout( function() {
-        window.scrollTo( 0, week( new Date() ) * cellSize * pageScale )
-    }, 10 )
+    // location.hash = 
 }
 
 // Load on turbolinks page change
