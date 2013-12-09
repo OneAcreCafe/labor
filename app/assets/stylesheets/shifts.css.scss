@@ -81,5 +81,67 @@ text.label {
 }
 
 .hour {
-    min-height: 1em;
+    padding: .2em;
+    min-height: .5em;
+    padding-bottom: 0;
 }
+
+.title {
+    padding: .1em .5em;
+    margin: 0 .5em;
+    border-bottom: 1px solid;
+}
+
+.open {
+    background-color: #B3BFE8;
+}
+
+.shift img {
+    margin-bottom: 0;
+}
+
+.icon {
+    min-width: 3em;
+    max-width: 3em;
+    height: 3em;
+    background-color: lightgray;
+    display: inline-block;
+    padding: .25em;
+    border: 2px solid darkgray;
+    border-radius: .5em;
+    margin-left: 1em;
+}
+
+.hour {
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.open {
+    border: 1px solid darkblue;
+}
+
+li {
+    display: inline;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.icon:hover {
+    background-color: yellow;
+}
+
+input:checked + .icon {
+    background-color: orange;
+}
+
+.shift.taken .icon {
+    background-color: green;
+}
+
+.hour.taken .icon:hover {
+    border-color: black;
+}
+

@@ -22,14 +22,10 @@ function renderShiftsCalendar() {
                 shifts[i].end = new Date( Date.parse(shifts[i].end ) )
             }
             
-            var start = d3.min( shifts, function( d ) { return d.start } )
-            var end = d3.max( shifts, function( d ) { return d.end } )
+            var start = new Date( d3.min( shifts, function( d ) { return d.start } ) )
+            var end = new Date( d3.max( shifts, function( d ) { return d.end } ) )
             
-            if( weekday( start ) != 0 ) { // Interval only includes dates in bounds
-                start.setDate( start.getDate() - 7 )
-            }
-
-            console.log( shifts, start, end, d3.time.mondays( start, end ) )
+            start.setDate( start.getDate() - 7 ) // Range is exclusive
 
             var weeks = d3.select( '#shifts' ).selectAll('.week')
                 .data( function( d ) { return d3.time.weeks( start, end ) } )
@@ -52,7 +48,7 @@ function renderShiftsCalendar() {
                 } )
                 .map( shifts )
  
-            console.log( weekBounds )
+            console.log( shifts, weekBounds )
 
             var days = weeks.selectAll( '.day' )
                 .data( function( d ) {
@@ -64,7 +60,8 @@ function renderShiftsCalendar() {
                 .append( 'div' )
                 .attr( {
                     class: 'day',
-                    day: day
+                    day: day,
+                    weekday: weekday
                 } )
 
             var titles = days
@@ -75,45 +72,63 @@ function renderShiftsCalendar() {
                 .text( day )
             
             
-            var hours = days.selectAll( '.hour' )
+            var hours = days
+                .filter( function( d ) { return week( d ) in weekBounds } )
+                .selectAll( '.hour' )
                 .data( function( d ) {
-                    if( weekBounds[week( d )] ) {
-                        var start = new Date( d.getTime() ),
-                            end = new Date( d.getTime() )
-                        start.setHours( weekBounds[week( d )].start )
-                        end.setHours( weekBounds[week( d )].end )
+                    var start = new Date( d ),
+                        end = new Date( d )
+                    start.setHours( weekBounds[week( d )].start )
+                    end.setHours( weekBounds[week( d )].end )
 
-                        return d3.time.hours( start, end )
-                    }
-                    return []
+                    return d3.time.hours( start, end )
                 } )
                 .enter()
-                .append( 'div' )
+                .append( 'ul' )
                 .attr( {
                     class: 'hour',
                     hour: hour
                 } )
 
 
-            //weeks.filter(
+            var shiftStarts = d3.nest()
+                .key( function( d ) { return d.start } )
+                .rollup( function( d ) { return d } )
+                .map( shifts )
             
+            console.log( shiftStarts )
 
-            d3.csv("dji.csv", function(error, csv) {
-                var data = d3.nest()
-                    .key(function(d) { return d.Date; })
-                    .rollup(function(d) { return (d[0].Close - d[0].Open) / d[0].Open; })
-                    .map(csv);
+            var shifts = hours.filter( function( d ) { return d in shiftStarts } )
+                .classed( 'open', true )
+                .selectAll( '.shift' )
+                .data( function( d ) { return shiftStarts[d] } )
+                .enter()
+                .append( 'li' )
+                .attr( {
+                    class: 'shift'
+                } )
+                .classed( 'taken', function( d ) { return d.taken } )
+                .on( 'dblclick', function( d ) { window.location = d.url } )
+                .append( 'label' )
 
-                console.log( csv, data )
+            shifts
+                .append( 'input' )
+                .attr( {
+                    type: 'radio',
+                    name: function( d ) { return 'shift[' + d.start + ']' } 
+                } )
 
-                rect.filter(function(d) { return d in data; })
-                    .attr("class", function(d) { return "day " + color(data[d]); })
-                    .select("title")
-                    .text(function(d) { return d + ": " + percent(data[d]); });
-            });
-        
+            shifts
+                .append( 'img' )
+                .classed( 'icon', true )
+                .attr( {
+                    src: function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null }
+                } )
+
+            $(document).trigger( 'shifts:loaded' )
+
             return
-            
+
                 // ToDo: Investigate scales for this computation: http://alignedleft.com/tutorials/d3/scales
                 function shiftHeight(shift) {
                     var dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
@@ -229,14 +244,13 @@ function renderShiftsCalendar() {
                     } )
             } )
         } )
-    // location.hash = 
 }
 
 // Load on turbolinks page change
 $(document).on( 'page:load', renderShiftsCalendar )
 $(document).ready( renderShiftsCalendar )
 
-function tasksAddListener() {
+$(document).on( 'shifts:loaded', function() {
     $('#take-shifts')
         .click( function() {
             var selected = d3.selectAll( '.icon.selected' )
@@ -257,18 +271,23 @@ function tasksAddListener() {
                 $form.submit()
             }
         } )
-    $(document).on( 'selection-changed', function() {
-        if( $('.selected').size() > 0 ) {
-            $('#take-shifts').removeClass( 'disabled' )
+
+    // Disable hours where a shift is taken
+    $('.taken').parent()
+        .addClass( 'taken' )
+        .find( 'input' ).attr( { disabled: true } )
+
+    // Allow unselecting shifts
+    $('label').click( function( event ) { 
+        event.preventDefault()
+        var $input = $(this).find('input');
+        if( ! $input.prop( 'disabled' ) && ! $input.prop( 'checked' ) ) {
+            $input.prop( { checked: true } )
         } else {
-            $('#take-shifts').addClass( 'disabled' )
+            $input.prop( { checked: false } )
         }
     } )
-
-}
-
-$(document).on( 'page:load', tasksAddListener )
-$(document).ready( tasksAddListener )
+} )
 
 $.fn.datepicker.defaults.format = 'yyyy/m/d'
 
