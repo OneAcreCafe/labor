@@ -111,13 +111,13 @@ input:checked + .icon {
     left: -.75em;
 }
 
-.day[weekday='5'], .day[weekday='6'] {
+.day[weekday='0'], .day[weekday='6'] {
     display: none;
 }
 
 .legend {
     position: relative;
-    top: 2.6em;
+    top: 2.65em;
     text-align: right;
     display: table-cell;
     width: 9em;
