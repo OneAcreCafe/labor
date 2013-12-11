@@ -9,126 +9,158 @@ function renderShiftsCalendar() {
         percent = d3.format( '.1%' ),
         format = d3.time.format( '%Y-%m-%d' )
     
-    d3.json( '/tasks.json', function( error, tasks ) {
-        var newTasks = {}
-        tasks.forEach( function( t ) { newTasks[t.id] = t } )
-        tasks = newTasks
-        
-        var url = window.location.pathname
-        url = ( url.length > 1 ? url : '/shifts/open' ) + '.json'
-        d3.json( url, function( error, shifts ) {
-            for( var i = 0; i < shifts.length; i++ ) {
-                shifts[i].start = new Date( Date.parse(shifts[i].start ) )
-                shifts[i].end = new Date( Date.parse(shifts[i].end ) )
-            }
+    var url = window.location.pathname
+    url = ( url.length <= 1 ? '/shifts/open' : url )
+    if( url == '/shifts' || url == '/shifts/open' ) {
+        d3.json( '/tasks.json', function( error, tasks ) {
+            var newTasks = {}
+            tasks.forEach( function( t ) { newTasks[t.id] = t } )
+            tasks = newTasks
             
-            var start = new Date( d3.min( shifts, function( d ) { return d.start } ) )
-            var end = new Date( d3.max( shifts, function( d ) { return d.end } ) )
+            d3.json( url + '.json', function( error, shifts ) {
+                for( var i = 0; i < shifts.length; i++ ) {
+                    shifts[i].start = new Date( Date.parse(shifts[i].start ) )
+                    shifts[i].end = new Date( Date.parse(shifts[i].end ) )
+                }
+                
+                var start = new Date( d3.min( shifts, function( d ) { return d.start } ) )
+                var end = new Date( d3.max( shifts, function( d ) { return d.end } ) )
+                
+                start.setDate( start.getDate() - 7 ) // Range is exclusive
+                
+                var weeks = d3.select( '#shifts' ).selectAll('.week')
+                    .data( function( d ) { return d3.time.weeks( start, end ) } )
+                    .enter()
+                    .append( 'div' )
+                    .attr( {
+                        class: 'week',
+                        week: week,
+                        month: monthNumber,
+                        year: year,
+                    } )
             
-            start.setDate( start.getDate() - 7 ) // Range is exclusive
-
-            var weeks = d3.select( '#shifts' ).selectAll('.week')
-                .data( function( d ) { return d3.time.weeks( start, end ) } )
-                .enter()
-                .append( 'div' )
-                .attr( {
-                    class: 'week',
-                    week: week,
-                    month: monthNumber,
-                    year: year,
-                } )
-            
-            var weekBounds = d3.nest()
-                .key( function( d ) { return week( d.start ) } )
-                .rollup( function( d ) {
-                    return {
-                        start: d3.min( d, function( d ) { return d.start.getHours() } ),
-                        end: d3.max( d, function( d ) { return d.end.getHours() } ),
-                    }
-                } )
-                .map( shifts )
- 
-            console.log( shifts, weekBounds )
-
-            var days = weeks.selectAll( '.day' )
-                .data( function( d ) {
-                    var end = new Date( d )
-                    end.setDate( d.getDate() + 7 )
-                    return d3.time.days( d, end )
-                } )
-                .enter()
-                .append( 'div' )
-                .attr( {
-                    class: 'day',
-                    day: day,
-                    weekday: weekday
-                } )
-
-            var titles = days
-                .append( 'div' )
-                .attr( {
-                    class: 'title',
-                } )
-                .text( day )
-            
-            
-            var hours = days
-                .filter( function( d ) { return week( d ) in weekBounds } )
-                .selectAll( '.hour' )
-                .data( function( d ) {
+                var weekBounds = d3.nest()
+                    .key( function( d ) { return week( d.start ) } )
+                    .rollup( function( d ) {
+                        return {
+                            start: d3.min( d, function( d ) { return d.start.getHours() } ),
+                            end: d3.max( d, function( d ) { return d.end.getHours() } ),
+                        }
+                    } )
+                    .map( shifts )
+                
+                var hoursForDay = function( d ) {
                     var start = new Date( d ),
-                        end = new Date( d )
+                    end = new Date( d )
                     start.setHours( weekBounds[week( d )].start )
                     end.setHours( weekBounds[week( d )].end )
-
+                    
                     return d3.time.hours( start, end )
+                }
+                
+                var legends = weeks
+                    .append( 'ol' )
+                    .attr( {
+                        class: 'legend',
+                        hour: hour
+                    } )
+                
+                legends
+                    .filter( function( d ) { return week( d ) in weekBounds } )
+                    .selectAll( '.legend' )
+                    .data( hoursForDay )
+                    .enter()
+                    .append( 'li' )
+                    .attr( {
+                        class: 'hour',
+                        hour: hour
+                    } )
+                    .text( function( d ) { return hour( d ) + "–" + ( parseInt( hour( d ) ) + 1 ) + ":00" } )
+                
+                
+                var days = weeks.selectAll( '.day' )
+                    .data( function( d ) {
+                        var end = new Date( d )
+                        end.setDate( d.getDate() + 7 )
+                        return d3.time.days( d, end )
+                    } )
+                    .enter()
+                    .append( 'div' )
+                    .attr( {
+                        class: 'day',
+                        day: day,
+                        weekday: weekday
+                    } )
+                
+                weeks.filter( function( d, i ) {
+                    var nextWeek = new Date( d )
+                    nextWeek.setDate( d.getDate() + 7 )
+                    return i == 0 || ( month( d ) != month( nextWeek ) )
                 } )
-                .enter()
-                .append( 'ul' )
-                .attr( {
-                    class: 'hour',
-                    hour: hour
-                } )
-
-
-            var shiftStarts = d3.nest()
-                .key( function( d ) { return d.start } )
-                .rollup( function( d ) { return d } )
-                .map( shifts )
-            
-            console.log( shiftStarts )
-
-            var shifts = hours.filter( function( d ) { return d in shiftStarts } )
-                .classed( 'open', true )
-                .selectAll( '.shift' )
-                .data( function( d ) { return shiftStarts[d] } )
-                .enter()
-                .append( 'li' )
-                .attr( {
-                    class: 'shift'
-                } )
-                .classed( 'taken', function( d ) { return d.taken } )
-                .on( 'dblclick', function( d ) { window.location = d.url } )
-                .append( 'label' )
-
-            shifts
-                .append( 'input' )
-                .attr( {
-                    type: 'radio',
-                    name: function( d ) { return 'shift[' + d.start + ']' } 
-                } )
-
-            shifts
-                .append( 'img' )
-                .classed( 'icon', true )
-                .attr( {
-                    src: function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null }
-                } )
-
-            $(document).trigger( 'shifts:loaded' )
-
-            return
-
+                    .append( 'div' )
+                    .classed( 'month title', true )
+                    .text( function( d ) {
+                        var nextWeek = new Date( d )
+                        nextWeek.setDate( d.getDate() + 7 )
+                        return month( nextWeek )
+                    } )
+                
+                
+                var titles = days
+                    .append( 'div' )
+                    .attr( {
+                        class: 'title',
+                    } )
+                    .text( day )
+                
+                var hours = days
+                    .filter( function( d ) { return week( d ) in weekBounds } )
+                    .selectAll( '.hour' )
+                    .data( hoursForDay )
+                    .enter()
+                    .append( 'ol' )
+                    .attr( {
+                        class: 'hour',
+                        hour: hour
+                    } )
+                
+                
+                var shiftStarts = d3.nest()
+                    .key( function( d ) { return d.start } )
+                    .rollup( function( d ) { return d } )
+                    .map( shifts )
+                
+                var shifts = hours.filter( function( d ) { return d in shiftStarts } )
+                    .classed( 'open', true )
+                    .selectAll( '.shift' )
+                    .data( function( d ) { return shiftStarts[d] } )
+                    .enter()
+                    .append( 'li' )
+                    .attr( {
+                        class: 'shift'
+                    } )
+                    .classed( 'taken', function( d ) { return d.taken } )
+                    .on( 'dblclick', function( d ) { window.location = d.url } )
+                    .append( 'label' )
+                
+                shifts
+                    .append( 'input' )
+                    .attr( {
+                        type: 'radio',
+                        name: function( d ) { return 'shift[' + d.start + ']' } 
+                    } )
+                
+                shifts
+                    .append( 'img' )
+                    .classed( 'icon', true )
+                    .attr( {
+                        src: function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null }
+                    } )
+                
+                $(document).trigger( 'shifts:loaded' )
+                
+                return
+                
                 // ToDo: Investigate scales for this computation: http://alignedleft.com/tutorials/d3/scales
                 function shiftHeight(shift) {
                     var dayLength = shift.day.end.getTime() - shift.day.start.getTime(),
@@ -244,6 +276,7 @@ function renderShiftsCalendar() {
                     } )
             } )
         } )
+    }
 }
 
 // Load on turbolinks page change
@@ -253,7 +286,7 @@ $(document).ready( renderShiftsCalendar )
 $(document).on( 'shifts:loaded', function() {
     $('#take-shifts')
         .click( function() {
-            var selected = d3.selectAll( '.icon.selected' )
+            var selected = d3.selectAll( 'input:checked' )
                 .map( function( selection ) {
                     return selection.map( function( d ) {
                         return d3.select( d ).data()[0]
@@ -287,6 +320,14 @@ $(document).on( 'shifts:loaded', function() {
             $input.prop( { checked: false } )
         }
     } )
+
+    $('.hour')
+        .mouseover( function() {
+            $(this).parents( '.week' ).find( ".hour[hour='" + $(this).attr( 'hour' ) + "']" ).attr( { hovered: true } )
+        } )
+        .mouseout( function() {
+            $(this).parents( '.week' ).find( '.hour' ).attr( { hovered: null } )
+        } )
 } )
 
 $.fn.datepicker.defaults.format = 'yyyy/m/d'

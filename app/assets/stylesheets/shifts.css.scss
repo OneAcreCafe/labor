@@ -7,54 +7,6 @@ body {
   shape-rendering: crispEdges;
 }
 
-text {
-    font-size: 50px;
-}
-
-text.label {
-    font-size: 50px;
-}
-
-.icon rect {
-    fill: lightgray;
-    stroke: #555;
-    stroke-width: 2;
-}
-
-.icon:hover rect {
-    fill: darkorange ! important;
-}
-
-.icon.selected rect {
-    fill: yellow;
-}
-
-.icon.taken rect {
-    fill: green;
-}
-
-.day {
-  fill: #fff;
-  stroke: #ccc;
-}
-
-.date {
-    fill: black;
-    font-size: 25px;
-}
-
-.month {
-  fill: none;
-  stroke: #000;
-  stroke-width: 3px;
-}
-
-.shift {
-  fill: teal;
-  stroke: #ccc;
-  stroke-width: 1px;
-}
-
 #take-shifts {
     position: fixed;
     top: 5em;
@@ -82,18 +34,23 @@ text.label {
 
 .hour {
     padding: .2em;
-    min-height: .5em;
+    min-height: 3em;
     padding-bottom: 0;
+    border-bottom: 1px solid #DDD;
 }
 
 .title {
-    padding: .1em .5em;
+    padding: 0 .25em;
     margin: 0 .5em;
-    border-bottom: 1px solid;
+    display: inline-block;
+    margin-bottom: .25em;
+    font-size: 125%;
 }
 
 .open {
     background-color: #B3BFE8;
+    border: 1px solid darkblue;
+    border-style: solid none;
 }
 
 .shift img {
@@ -115,13 +72,10 @@ text.label {
 .hour {
     list-style: none;
     margin-bottom: 0;
+    margin-top: -1px;
 }
 
-.open {
-    border: 1px solid darkblue;
-}
-
-li {
+.hour li {
     display: inline;
 }
 
@@ -129,7 +83,7 @@ input[type="radio"] {
     display: none;
 }
 
-.icon:hover {
+input:not([disabled]):not(:checked) + .icon:hover {
     background-color: yellow;
 }
 
@@ -145,3 +99,36 @@ input:checked + .icon {
     border-color: black;
 }
 
+.month {
+    transform: rotate(90deg);
+    -ms-transform: rotate(90deg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Safari and Chrome */
+    -webkit-transform-origin: bottom left;
+    font-size: 150%;
+    width: 2em;
+    position: relative;
+    top: -1.5em;
+    left: -.75em;
+}
+
+.day[weekday='5'], .day[weekday='6'] {
+    display: none;
+}
+
+.legend {
+    position: relative;
+    top: 2.6em;
+    text-align: right;
+    display: table-cell;
+    width: 9em;
+}
+
+.legend .hour {
+    display: block;
+    padding-top: 1em;
+    padding-right: .5em;
+}
+
+.legend .hour[hovered] {
+    font-weight: bold;
+}
