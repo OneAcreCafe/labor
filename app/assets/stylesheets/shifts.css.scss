@@ -111,10 +111,6 @@ input:checked + .icon {
     top: -.75em;
 }
 
-.day[weekday='0'], .day[weekday='6'] {
-    display: none;
-}
-
 .legend {
     text-align: right;
     display: table-cell;
@@ -156,4 +152,8 @@ input:checked + .icon {
 
 .shifts {
     padding: 0;
+}
+
+[weekday='0'], [weekday='6'] {
+    display: none;
 }

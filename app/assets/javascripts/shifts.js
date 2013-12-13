@@ -66,6 +66,9 @@ function renderShiftsCalendar() {
                         .enter()
                         .append( 'li' )
                         .classed( 'title', true )
+                        .attr( {
+                            weekday: weekday
+                        } )
                         .text( d3.time.format( '%-d' ) )
     
                     if( index == 0 || month( day ) != month( nextWeek( day ) ) ) {
@@ -84,6 +87,7 @@ function renderShiftsCalendar() {
                                     day.setHours( currentHour )
                                     return day
                                 } )
+
                             
                             weeks.append( 'li' )
                                 .classed( 'legend', true )
@@ -94,6 +98,9 @@ function renderShiftsCalendar() {
                                 .enter()
                                 .append( 'li' )
                                 .classed( 'hour', true )
+                                .attr( {
+                                    weekday: weekday
+                                } )
                                 .append( 'ul' )
                                 .classed( 'shifts', true )
                                 .datum( function( d ) {
