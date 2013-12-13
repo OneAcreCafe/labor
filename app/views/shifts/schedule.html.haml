@@ -1,0 +1,8 @@
+= @start_date
+= @end_date
+
+%ol
+  - day = @start_date
+  - begin
+    %li= day
+  - end while (day += 24*60*60) < @end_date

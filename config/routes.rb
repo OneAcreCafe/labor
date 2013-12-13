@@ -13,6 +13,7 @@ Volunteers::Application.routes.draw do
       post :take
       get :clone
       post :clone, action: :do_clone
+      get :schedule
     end
   end
 
