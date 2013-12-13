@@ -187,13 +187,9 @@ $(document).on( 'shifts:loaded', function() {
         }
     } )
 
-    $('.hour')
-        .mouseover( function() {
-            $(this).parents( '.week' ).find( ".hour[hour='" + $(this).attr( 'hour' ) + "']" ).attr( { hovered: true } )
-        } )
-        .mouseout( function() {
-            $(this).parents( '.week' ).find( '.hour' ).attr( { hovered: null } )
-        } )
+    if( navigator.userAgent.match( /Chrome/ ) ) {
+        $('body').addClass( 'chrome' )
+    }
 } )
 
 $.fn.datepicker.defaults.format = 'yyyy/m/d'

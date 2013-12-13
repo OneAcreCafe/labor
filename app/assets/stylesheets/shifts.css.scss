@@ -62,11 +62,13 @@ body {
     max-width: 3em;
     height: 3em;
     background-color: lightgray;
-    display: inline-block;
     padding: .25em;
     border: 2px solid darkgray;
     border-radius: .5em;
-    margin-left: 1em;
+}
+
+label {
+    display: inline-block;
 }
 
 .hour {
@@ -76,7 +78,7 @@ body {
 }
 
 .hour li {
-    display: inline;
+    display: inline-block;
 }
 
 input[type="radio"] {
@@ -157,4 +159,12 @@ input:checked + .icon {
 
 [weekday='0'], [weekday='6'] {
     display: none;
+}
+
+.shift {
+    margin-left: .25em;
+}
+
+.chrome .shift {
+    margin-left: 1em;
 }
