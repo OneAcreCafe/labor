@@ -101,14 +101,14 @@ input:checked + .icon {
 
 .month {
     transform: rotate(90deg);
+    transform-origin: bottom left;
     -ms-transform: rotate(90deg); /* IE 9 */
     -webkit-transform: rotate(90deg); /* Safari and Chrome */
     -webkit-transform-origin: bottom left;
     font-size: 150%;
     width: 2em;
     position: relative;
-    top: -1.5em;
-    left: -.75em;
+    top: -.75em;
 }
 
 .day[weekday='0'], .day[weekday='6'] {
@@ -116,8 +116,6 @@ input:checked + .icon {
 }
 
 .legend {
-    position: relative;
-    top: 2.75em;
     text-align: right;
     display: table-cell;
     width: 9em;
@@ -131,4 +129,27 @@ input:checked + .icon {
 
 .legend .hour[hovered] {
     font-weight: bold;
+}
+
+.titles, .hours {
+    display: table-row;
+    list-style: none;
+}
+
+.title, .hour {
+    display: table-cell;
+}
+
+.title, .hour {
+    border: 1px solid;
+    border-style: solid solid none solid;
+}
+
+.hours:hover {
+    background-color: #CCC;
+    font-weight: bold;
+}
+
+.hours:last-child .hour {
+    border-bottom: 1px solid;
 }
