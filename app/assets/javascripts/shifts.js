@@ -118,6 +118,9 @@ function renderShiftsCalendar() {
                                 .classed( 'taken', function( d ) { return d.taken } )
                                 .on( 'dblclick', function( d ) { window.location = d.url } )
                                 .append( 'label' )
+                                .attr( {
+                                    title: function( d ) { return tasks[d.task_id].name }
+                                } )
                             
                             shifts
                                 .append( 'input' )
