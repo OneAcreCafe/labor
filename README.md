@@ -1,7 +1,7 @@
 Volunteers
 ==========
 
-The [One Acre Café](http://oneacrecafe.com) is a volunteer-staffed pay-how-you-can restaurant in Johnson City, TN. This software is to help them manage their staffing.
+The [One Acre Café](http://oneacrecafe.org) is a volunteer-staffed pay-how-you-can restaurant in Johnson City, TN. This software is to help them manage their staffing.
 
 There are three main ways you can participate at this point:
 
