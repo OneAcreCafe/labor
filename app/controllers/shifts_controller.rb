@@ -100,6 +100,10 @@ class ShiftsController < ApplicationController
     @start_date = params[:from] || Time.new
     @end_date = params[:to] || @start_date + 1.week
 
+    @start_hour = 10
+    @end_hour = 14
+
+    @tasks = Task.all
     @shifts = Shift.find(:all, :conditions => ['start <= ? AND start >= ?', @start_date, @end_date])
   end
 
