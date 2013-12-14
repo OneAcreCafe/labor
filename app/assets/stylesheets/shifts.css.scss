@@ -228,3 +228,18 @@ input:checked + .icon {
 .schedule .workers .taken {
     background-color: #EEE;
 }
+
+#range {
+    margin-bottom: 1em;
+    text-align: center;
+}
+
+#range .input-daterange {
+    display: inline;
+}
+
+@media print {
+    #range {
+        display: none;
+    }
+}
