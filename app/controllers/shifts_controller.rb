@@ -97,7 +97,7 @@ class ShiftsController < ApplicationController
   end
 
   def schedule
-    @start_date = params[:from] || Time.new
+    @start_date = params[:from] || Time.new.change(hour: 0)
     @end_date = params[:to] || @start_date + 1.week
 
     @start_hour = 10
@@ -117,7 +117,7 @@ class ShiftsController < ApplicationController
     to_start = DateTime.strptime( params[:to][:start], date_format )
 
     originals = Shift.where('start >= ? AND start <= ?', from_start, from_end)
-    puts originals.count
+
     originals.each do |shift|
       new = shift.dup
       new.workers = []

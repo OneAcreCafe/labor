@@ -1,5 +1,6 @@
 = @start_date
 = @end_date
+= @shifts.count
 
 %ul
   - @tasks.each do |task|
@@ -8,8 +9,16 @@
       %ol
         - (@start_hour .. @end_hour).step(1) do |hour|
           %li
-            = hour
+            = sprintf '%d–%d:00', hour, hour + 1
             %ol
               - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
                 - day = Time.at(timestamp).change(hour: hour)
-                %li= day
+                %li
+                  = day
+                  %ul
+                    -# @shifts.collect{ |s| s.task == task and s.start >= day and s.start > day + 1.hour }.each do |shift|
+                    - @shifts.each do |shift|
+                      - shift.workers.each do |worker|
+                        %li= worker.email
+              
+              
