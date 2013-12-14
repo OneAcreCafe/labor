@@ -24,12 +24,11 @@
               %td
                 %ul.workers
                   - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
-                    - if can? :read, User
-                      - shift.workers.each do |worker|
+                    - shift.workers.each do |worker|
+                      - if can? :read, User
                         %li= link_to worker.email, shift
-                      - (1 .. shift.needed).each do |x|
-                        %li
-                    - else
-                      - (1 .. shift.size).each do |x|
-                        %li
+                      - else
+                        %li.taken
+                    - (1 .. shift.needed).each do |x|
+                      %li
               

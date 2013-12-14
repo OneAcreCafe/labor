@@ -221,3 +221,7 @@ input:checked + .icon {
 .schedule .workers li:last-child {
     border-bottom: none;
 }
+
+.schedule .workers .taken {
+    background-color: #EEE;
+}
