@@ -186,10 +186,15 @@ input:checked + .icon {
 .schedule .no-data {
     text-align: center;
     font-size: 150%;
+    padding: 1em;
 }
 
 .schedule th, .schedule td {
     border: 1px solid;
+}
+
+.schedule td {
+    background-color: #F5F5F5;
 }
 
 .schedule .workers {
@@ -206,6 +211,7 @@ input:checked + .icon {
     text-align: center;
     line-height: 2.5em;
     min-height: 2.5em;
+    background-color: white;
 }
 
 .schedule .workers li:first-child {

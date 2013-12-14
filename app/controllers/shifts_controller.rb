@@ -1,8 +1,8 @@
 class ShiftsController < ApplicationController
   # before_action :set_shift, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_user!, except: [:index, :show, :open, :take]
+  before_filter :authenticate_user!, except: [:index, :show, :open, :take, :schedule]
   load_and_authorize_resource
-  skip_authorize_resource only: [:open, :take]
+  skip_authorize_resource only: [:open, :take, :schedule]
 
   # GET /shifts
   # GET /shifts.json

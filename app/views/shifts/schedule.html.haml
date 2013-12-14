@@ -17,20 +17,20 @@
           %td.no-data{colspan: day_span + 1} No Shifts
       - else
         - start_hour, end_hour = shifts.collect{ |s| s.start.hour }.minmax
-        - (start_hour .. end_hour + 1).step(1) do |hour|
+        - (start_hour .. end_hour).step(1) do |hour|
           %tr
             %th= sprintf '%d–%d:00', hour, hour + 1
             - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
               - day = Time.at(timestamp).change(hour: hour)
               %td
                 %ul.workers
-                  - if can? :read, User
-                    - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
+                  - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
+                    - if can? :read, User
                       - shift.workers.each do |worker|
                         %li= link_to worker.email, shift
                       - (1 .. shift.needed).each do |x|
                         %li
-                  - else
-                    - (1 .. shift.size).each do |x|
-                      %li
+                    - else
+                      - (1 .. shift.size).each do |x|
+                        %li
               
