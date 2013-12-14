@@ -168,3 +168,25 @@ input:checked + .icon {
 .chrome .shift {
     margin-left: 1em;
 }
+
+#schedule {
+    width: 100%;
+}
+
+#schedule th {
+    text-align: center;
+}
+
+#schedule .task {
+    font-size: 300%;
+    background-color: #DDD;
+}
+
+#schedule .no-data {
+    text-align: center;
+    font-size: 150%;
+}
+
+#schedule th, #schedule td {
+    border: 1px solid;
+}

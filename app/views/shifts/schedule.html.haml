@@ -1,28 +1,33 @@
-= @start_date
-= @end_date
+- day_span = ((@end_date - @start_date).to_f / (24 * 60 * 60)).ceil + 1
 
-%ul
+%table#schedule
   - @tasks.each do |task|
-    %li
-      = task.name
-      %ol
-        - shifts = Shift.where('start >= ? AND start < ? AND task_id = ?', @start_date, @end_date, task)
-        - if shifts.count == 0
-          %li No Shifts
-        - else
-          - start_hour, end_hour = shifts.collect{ |s| s.start.hour }.minmax
-          - (start_hour .. end_hour + 1).step(1) do |hour|
-            %li
-              = sprintf '%d–%d:00', hour, hour + 1
-              %ol
-                - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
-                  - day = Time.at(timestamp).change(hour: hour)
-                  %li
-                    = day
-                    %ul
-                      - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
-                        = link_to 'Shift', shift
-                        - shift.workers.each do |worker|
-                          %li= worker.email
+    %thead
+      %tr
+        %th{colspan: day_span + 1, class: 'task'}= task.name
+      %tr
+        %th
+        - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
+          - day = Time.at(timestamp)
+          %th= day.strftime('%b %d')
+    %tbody
+      - shifts = Shift.where('start >= ? AND start < ? AND task_id = ?', @start_date, @end_date, task)
+      - if shifts.count == 0
+        %tr
+          %td{colspan: day_span + 1, class: 'no-data'} No Shifts
+      - else
+        - start_hour, end_hour = shifts.collect{ |s| s.start.hour }.minmax
+        - (start_hour .. end_hour + 1).step(1) do |hour|
+          %tr
+            %th= sprintf '%d–%d:00', hour, hour + 1
+            - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
+              - day = Time.at(timestamp).change(hour: hour)
+              %td
+                %ul
+                  - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
+                    - shift.workers.each do |worker|
+                      %li= link_to worker.email, shift
+                    - (1 .. shift.needed).each do |x|
+                      %li
               
               
