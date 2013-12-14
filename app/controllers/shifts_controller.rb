@@ -97,8 +97,9 @@ class ShiftsController < ApplicationController
   end
 
   def schedule
-    @start_date = params[:from] || Time.new.change(hour: 0)
-    @end_date = params[:to] || @start_date + 1.week - 1.day
+    date_format = '%Y/%m/%d'
+    @start_date = params[:range] ? DateTime.strptime(params[:range][:start], date_format) : Time.new.change(hour: 0)
+    @end_date = params[:range] ? DateTime.strptime(params[:range][:end], date_format) : @start_date + 1.week - 1.day
 
     @tasks = Task.all.order(:name)
   end
