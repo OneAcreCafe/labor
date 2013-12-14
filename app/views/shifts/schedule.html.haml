@@ -20,6 +20,7 @@
           %tr
             %th= sprintf '%d–%d:00', hour, hour + 1
             - days(@start_date, @end_date).each do |day|
+              - day = day.change(hour: hour)
               %td
                 %ul.workers
                   - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
