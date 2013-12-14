@@ -100,9 +100,6 @@ class ShiftsController < ApplicationController
     @start_date = params[:from] || Time.new.change(hour: 0)
     @end_date = params[:to] || @start_date + 1.week
 
-    @start_hour = 10
-    @end_hour = 14
-
     @tasks = Task.all
   end
 
