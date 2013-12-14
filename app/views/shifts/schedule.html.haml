@@ -1,16 +1,13 @@
-= @start_date
-= @end_date
-
-= day_span = ((@end_date - @start_date).to_f / (24 * 60 * 60)).ceil + 1
+- day_span = days(@start_date, @end_date).count
 
 #range
-  = form_tag schedule_shifts_path, method: 'get' do
+  = form_tag schedule_shifts_path, {method: 'get', class: 'form-inline', role: 'form'} do
     = label_tag 'Range to Display'
     .input-daterange
       = text_field :range, :start, data: { provide: :datepicker }, class: 'input-small'
       %span.add-on to
       = text_field :range, :end, data: { provide: :datepicker }, class: 'input-small'
-    = submit_tag 'Filter'
+    = submit_tag 'Filter', class: [:btn, 'btn-default']
 
 
 - @tasks.each do |task|
