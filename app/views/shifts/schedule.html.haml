@@ -1,10 +1,10 @@
 - day_span = ((@end_date - @start_date).to_f / (24 * 60 * 60)).ceil + 1
 
-%table#schedule
-  - @tasks.each do |task|
+- @tasks.each do |task|
+  %table.schedule
     %thead
       %tr
-        %th{colspan: day_span + 1, class: 'task'}= task.name
+        %th.task{colspan: day_span + 1}= task.name
       %tr
         %th
         - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
@@ -14,7 +14,7 @@
       - shifts = Shift.where('start >= ? AND start < ? AND task_id = ?', @start_date, @end_date, task)
       - if shifts.count == 0
         %tr
-          %td{colspan: day_span + 1, class: 'no-data'} No Shifts
+          %td.no-data{colspan: day_span + 1} No Shifts
       - else
         - start_hour, end_hour = shifts.collect{ |s| s.start.hour }.minmax
         - (start_hour .. end_hour + 1).step(1) do |hour|
@@ -23,11 +23,14 @@
             - (@start_date.to_i .. @end_date.to_i).step(24*60*60) do |timestamp|
               - day = Time.at(timestamp).change(hour: hour)
               %td
-                %ul
-                  - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
-                    - shift.workers.each do |worker|
-                      %li= link_to worker.email, shift
-                    - (1 .. shift.needed).each do |x|
+                %ul.workers
+                  - if can? :read, User
+                    - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
+                      - shift.workers.each do |worker|
+                        %li= link_to worker.email, shift
+                      - (1 .. shift.needed).each do |x|
+                        %li
+                  - else
+                    - (1 .. shift.size).each do |x|
                       %li
-              
               

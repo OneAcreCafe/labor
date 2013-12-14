@@ -169,24 +169,49 @@ input:checked + .icon {
     margin-left: 1em;
 }
 
-#schedule {
+.schedule {
     width: 100%;
+    margin-bottom: 1.5em;
 }
 
-#schedule th {
+.schedule th {
     text-align: center;
 }
 
-#schedule .task {
+.schedule .task {
     font-size: 300%;
     background-color: #DDD;
 }
 
-#schedule .no-data {
+.schedule .no-data {
     text-align: center;
     font-size: 150%;
 }
 
-#schedule th, #schedule td {
+.schedule th, .schedule td {
     border: 1px solid;
+}
+
+.schedule .workers {
+    border-width: 1px;
+    border-style: none solid;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.schedule .workers li {
+    border-width: 1px;
+    border-style: solid none;
+    text-align: center;
+    line-height: 2.5em;
+    min-height: 2.5em;
+}
+
+.schedule .workers li:first-child {
+    border-top: none;
+}
+
+.schedule .workers li:last-child {
+    border-bottom: none;
 }
