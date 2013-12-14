@@ -104,7 +104,6 @@ class ShiftsController < ApplicationController
     @end_hour = 14
 
     @tasks = Task.all
-    @shifts = Shift.find(:all, :conditions => ['start <= ? AND start >= ?', @start_date, @end_date])
   end
 
   def clone

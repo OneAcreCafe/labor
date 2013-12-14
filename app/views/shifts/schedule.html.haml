@@ -16,8 +16,8 @@
                 %li
                   = day
                   %ul
-                    -# @shifts.collect{ |s| s.task == task and s.start >= day and s.start > day + 1.hour }.each do |shift|
-                    - @shifts.each do |shift|
+                    - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
+                      = link_to 'Shift', shift
                       - shift.workers.each do |worker|
                         %li= worker.email
               
