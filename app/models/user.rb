@@ -14,6 +14,13 @@ class User < ActiveRecord::Base
   def display_name
     name = self.nickname || self.given_name || self.email || 'Nameless'
   end
+
+  def full_name
+    name = self.given_name
+    name += ' ' if name and self.family_name
+    name += self.family_name if self.family_name
+    name ||= self.email || 'Nameless'
+  end
   
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|

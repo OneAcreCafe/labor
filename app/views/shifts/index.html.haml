@@ -3,6 +3,9 @@
 - else
   %button#take-shifts.btn.btn-default.btn-primary Take Shifts
 
-  #shifts-form= form_tag take_shifts_path
+  #shifts-form
+    = form_tag take_shifts_path do
+      - if can? :read, User
+        = collection_select :user, :id, User.all, :id, :full_name, {}, { multiple: true, id: 'users' }
 
   #shifts
