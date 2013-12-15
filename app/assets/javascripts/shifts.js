@@ -13,7 +13,7 @@ function renderShiftsCalendar() {
     
     var url = window.location.pathname
     url = url.length <= 1 ? '/shifts/open' : url
-    if( url == '/shifts' || url == '/shifts/open' ) {
+    if( url == '/shifts' || url == '/shifts/open' || url == '/my/shifts' ) {
         d3.json( '/tasks.json', function( error, tasks ) {
             var newTasks = {}
             tasks.forEach( function( t ) { newTasks[t.id] = t } )

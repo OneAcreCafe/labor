@@ -145,6 +145,12 @@ class ShiftsController < ApplicationController
     redirect_to action: :index
   end
 
+  def my
+    @shifts = current_user.shifts
+
+    render :index
+  end
+
   def generate_ical
     cal = Icalendar::Calendar.new
     @shifts.each do |shift|

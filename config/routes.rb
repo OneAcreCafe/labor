@@ -26,6 +26,8 @@ Volunteers::Application.routes.draw do
   end
 
   get '/about' => 'pages#about'
+  get '/my/shifts' => 'shifts#my'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

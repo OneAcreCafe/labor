@@ -22,6 +22,10 @@
                 Shifts
                 %b.caret
               %ul.dropdown-menu
+                - if current_user
+                  %li
+                    = link_to 'View Mine', my_shifts_path, class: :iconed
+                    = link_to '', my_shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                 %li
                   = link_to 'View All', shifts_path, class: :iconed
                   = link_to '', shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
