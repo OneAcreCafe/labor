@@ -119,7 +119,9 @@ function renderShiftsCalendar() {
                                 .on( 'dblclick', function( d ) { window.location = d.url } )
                                 .append( 'label' )
                                 .attr( {
-                                    title: function( d ) { return tasks[d.task_id].name }
+                                    title: function( d ) {
+                                        return tasks[d.task_id].name + " (×" + d.needed + ")"
+                                    }
                                 } )
                             
                             shifts

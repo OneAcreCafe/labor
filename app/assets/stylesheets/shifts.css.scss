@@ -258,3 +258,8 @@ input:checked + .icon {
         display: none;
     }
 }
+
+.datetime select {
+    display: inline;
+    width: auto;
+}

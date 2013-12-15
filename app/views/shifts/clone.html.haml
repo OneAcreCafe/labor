@@ -2,16 +2,16 @@
 
 = form_tag clone_shifts_path do
 
-  .field
-    = label_tag 'Range to Clone'
-    .input-daterange
+  .form-group
+    = label_tag nil, 'Range to Clone', class: ['col-sm-2', 'control-label']
+    .col-sm-10.input-daterange
       = text_field :from, :start, data: { provide: :datepicker }, class: 'input-small'
       %span.add-on to
       = text_field :from, :end, data: { provide: :datepicker }, class: 'input-small'
 
-  .field
-    = label_tag 'To Start Date'
-    = text_field :to, :start, data: { provide: :datepicker }, class: 'input-small'
+  .form-group
+    = label_tag nil, 'To Start Date', class: ['col-sm-2', 'control-label']
+    .col-sm-10= text_field :to, :start, data: { provide: :datepicker }, class: ['input-small', 'form-control']
 
-  .field
-    = submit_tag 'Clone'
+  .actions
+    = submit_tag 'Clone', class: [:btn, 'btn-default']

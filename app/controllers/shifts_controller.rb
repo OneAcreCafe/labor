@@ -18,7 +18,11 @@ class ShiftsController < ApplicationController
   end
 
   def open
-    @shifts = Shift.all.select{ |s| s.needed > 0 || s.worker?(current_user) }.sort_by{ |s| [s.start, s.task.name] }
+    @shifts =
+      Shift
+      .where('start >= ?', Time.now)
+      .select{ |s| s.needed > 0 || s.worker?(current_user) }
+      .sort_by{ |s| [s.start, s.task.name] }
 
     respond_to do |format|
       format.html { render :index }

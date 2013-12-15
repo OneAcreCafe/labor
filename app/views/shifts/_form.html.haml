@@ -1,4 +1,4 @@
-= form_for @shift do |f|
+= form_for @shift, class: 'form-horizontal' do |f|
   - if @shift.errors.any?
     #error_explanation
       %h2= "#{pluralize(@shift.errors.count, "error")} prohibited this shift from being saved:"
@@ -6,20 +6,21 @@
         - @shift.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :start
-    = f.datetime_select :start
-  .field
-    = f.label :end
-    = f.datetime_select :end
-  .field
-    = f.label :size
-    = f.text_field :size
-  .field
-    = f.label :task
-    = f.collection_select :task_id, Task.all, :id, :name, { prompt: "Task" , :selected => @shift.task ? @shift.task.id : nil }
-  .field
-    = f.label :workers
-    = f.collection_select :worker_ids, User.all, :id, :full_name, { :selected => @shift.workers.collect(&:id) }, { multiple: true }
+  .form-group.datetime
+    = f.label :start, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.datetime_select :start, {}, { class: 'form-control' }
+  .form-group.datetime
+    = f.label :end, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.datetime_select :end, {}, { class: 'form-control' }
+  .form-group
+    = f.label :size, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.text_field :size, class: 'form-control'
+  .form-group
+    = f.label :task, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.collection_select :task_id, Task.all, :id, :name, { prompt: 'Task' , selected: @shift.task.try(:id) }, class: 'form-control'
+  .form-group
+    = f.label :workers, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.collection_select :worker_ids, User.all, :id, :full_name, { selected: @shift.workers.collect(&:id) }, { multiple: true, class: 'form-control' }
+    
   .actions
     = f.submit 'Save', class: [:btn, 'btn-default']
