@@ -17,11 +17,17 @@ img[src='/images/facebook-login.svg'] {
     max-width: 6em;
 }
 
-.dropdown-menu .iconed, .dropdown-menu .glyphicon {
-    display: inline-block;
+.dropdown-menu {
+    .iconed, .glyphicon {
+        display: inline-block;
+    }
 }
 
-.datatable th, .datatable td {
-    border: 1px solid;
-    padding: .25em .5em;
+.datatable {
+    margin-bottom: 1em;
+    
+    th, td {
+        border: 1px solid;
+        padding: .25em .5em;
+    }
 }

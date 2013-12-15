@@ -146,9 +146,6 @@ input:checked + .icon {
 
 .title, .hour {
     display: table-cell;
-}
-
-.title, .hour {
     border-width: 1px;
     border-style: solid solid none solid;
 }
@@ -177,78 +174,78 @@ input:checked + .icon {
 .schedule {
     width: 100%;
     margin-bottom: 1.5em;
-}
 
-.schedule th {
-    text-align: center;
-}
+    th {
+        text-align: center;
+    }
 
-.schedule .task {
-    font-size: 300%;
-    background-color: #DDD;
-    font-family: Lato;
-}
+    .task {
+        font-size: 300%;
+        background-color: #DDD;
+        font-family: Lato;
+    }
 
-.schedule .no-data {
-    text-align: center;
-    font-size: 150%;
-    padding: 1em;
-}
+    .no-data {
+        text-align: center;
+        font-size: 150%;
+        padding: 1em;
+    }
 
-.schedule th, .schedule td {
-    border: 1px solid;
-}
+    th, td {
+        border: 1px solid;
+    }
 
-.schedule td {
-    background-color: #F5F5F5;
-}
+    td {
+        background-color: #F5F5F5;
+    }
 
-.schedule .workers {
-    border-width: 1px;
-    border-style: none solid;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
+    .workers {
+        border-width: 1px;
+        border-style: none solid;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        
+        li {
+            border-width: 1px;
+            border-style: solid none;
+            text-align: center;
+            line-height: 2.5em;
+            min-height: 2.5em;
+            background-color: white;
 
-.schedule .workers li {
-    border-width: 1px;
-    border-style: solid none;
-    text-align: center;
-    line-height: 2.5em;
-    min-height: 2.5em;
-    background-color: white;
-}
+            a {
+                display: block;
+                height: 100%;
+            }
+            
+            a:hover {
+                background-color: #FF6;
+                text-decoration: none;
+            }
+        }
 
-.schedule .workers li:first-child {
-    border-top: none;
-}
+        li:first-child {
+            border-top: none;
+        }
 
-.schedule .workers li:last-child {
-    border-bottom: none;
-}
+        li:last-child {
+            border-bottom: none;
+        }
 
-.schedule .workers li a {
-    display: block;
-    height: 100%;
-}
-
-.schedule .workers li a:hover {
-    background-color: #FF6;
-    text-decoration: none;
-}
-
-.schedule .workers .taken {
-    background-color: #EEE;
+        .taken {
+            background-color: #EEE;
+        }
+    }
 }
 
 #range {
     margin-bottom: 1em;
     text-align: center;
-}
 
-#range .input-daterange {
-    display: inline;
+    .input-daterange {
+        display: inline;
+    }
 }
 
 @media print {
