@@ -16,4 +16,5 @@
     = f.label :description, class: 'col-sm-1 control-label'
     .col-sm-11= f.text_area :description, class: 'form-control'
   
-  = f.submit 'Save', class: 'form-control'
+  .actions
+    = f.submit 'Save', class: [:btn, 'btn-default']

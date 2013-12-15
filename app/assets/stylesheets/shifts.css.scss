@@ -120,17 +120,19 @@ input:checked + .icon {
     -ms-transform: rotate(90deg); /* IE 9 */
     -webkit-transform: rotate(90deg); /* Safari and Chrome */
     -webkit-transform-origin: bottom left;
-    font-size: 150%;
+    font-size: 175%;
     width: 2em;
     position: relative;
     top: -.75em;
+    font-family: Lato;
 }
 
 .legend {
     text-align: right;
     display: table-cell;
-    width: 9em;
+    width: 7em;
     padding-right: .5em;
+    font-size: 125%;
 }
 
 .legend .hour {
@@ -170,10 +172,6 @@ input:checked + .icon {
 
 .shift {
     margin-left: .25em;
-}
-
-.chrome .shift {
-    margin-left: 1em;
 }
 
 .schedule {
