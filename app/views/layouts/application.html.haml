@@ -21,8 +21,12 @@
                 Shifts
                 %b.caret
               %ul.dropdown-menu
-                %li= link_to 'View All', shifts_path
-                %li= link_to 'View Open', open_shifts_path
+                %li
+                  = link_to 'View All', shifts_path, class: :iconed
+                  = link_to '', shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
+                %li
+                  = link_to 'View Open', open_shifts_path, class: :iconed
+                  = link_to '', open_shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                 %li= link_to 'Schedule', schedule_shifts_path
                 - if can? :create, Shift
                   %li= link_to 'New', new_shift_path
