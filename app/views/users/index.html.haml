@@ -1,17 +1,22 @@
-%h1 Listing users
+%h1 Listing Users
 
-%table
+%table.datatable
   %tr
-    %th
-    %th
+    %th Given Name
+    %th Family Name
+    %th Nickname
+    %th E-Mail
     %th
 
   - @users.each do |user|
     %tr
-      %td= link_to 'Show', user
-      %td= link_to 'Edit', edit_user_path(user)
-      %td= link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      %td= user.given_name
+      %td= user.family_name
+      %td= user.nickname
+      %td= link_to user.email, "mailto:" + user.email
+      %td
+        = link_to 'Show', user, class: [:btn, 'btn-default']
+        = link_to 'Edit', edit_user_path(user), class: [:btn, 'btn-default']
+        = link_to 'Destroy', user, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
 
-%br
-
-= link_to 'New User', new_user_path
+= link_to 'New User', new_user_path, class: [:btn, 'btn-default']

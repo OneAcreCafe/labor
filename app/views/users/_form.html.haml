@@ -6,5 +6,40 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
 
+  .form-group
+    = f.label :given_name, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.text_field :given_name, {:autofocus => true, class: 'form-control'}
+
+  .form-group
+    = f.label :family_name, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.text_field :family_name, class: 'form-control'
+
+  .form-group
+    = f.label :nickname, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.text_field :nickname, class: 'form-control'
+
+  .form-group
+    = f.label :email, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.email_field :email, class: 'form-control'
+
+  - if f.object.password_required?
+    .form-group
+      = f.label :password, class: ['col-sm-2', 'control-label']
+      .col-sm-10= f.password_field :password, class: 'form-control'
+
+    .form-group
+      = f.label :password_confirmation, class: ['col-sm-2', 'control-label']
+      .col-sm-10= f.password_field :password_confirmation, class: 'form-control'
+
+  - if f.object.encrypted_password.present?
+    .form-group
+      = f.label :current_password, class: ['col-sm-2', 'control-label']
+      .col-sm-10= f.password_field :current_password, class: 'form-control'
+
+  - if can? :update, @user.roles
+    .form-group
+      = f.label :roles, class: ['col-sm-2', 'control-label']
+      .col-sm-10= f.collection_select :role_ids, Role.all, :id, :name, { :selected => @user.roles.collect(&:id) }, { multiple: true, class: 'form-control' }
+
   .actions
-    = f.submit 'Save'
+    = f.submit 'Save', class: [:btn, 'btn-default']
