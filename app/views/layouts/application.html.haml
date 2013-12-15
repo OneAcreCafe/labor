@@ -1,0 +1,53 @@
+== <!DOCTYPE html>
+%html{:'xmlns:fb' => 'http://ogp.me/ns/fb#'}
+  %head
+    %title Volunteers
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/d3/3.3.10/d3.min.js"
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    = favicon_link_tag 'favicon.png', rel: 'icon', type: 'image/png'
+  %body
+    .navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
+      .container
+        .navbar-header
+          = link_to 'Volunteers', '#', class: 'navbar-brand'
+        .navbar-collapse.collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to 'Home', '#'
+            %li{ class: params[:controller] == 'shifts' ? 'active dropdown' : 'dropdown' }
+              %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                Shifts
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'View All', shifts_path
+                %li= link_to 'View Open', open_shifts_path
+                %li= link_to 'Schedule', schedule_shifts_path
+                - if can? :create, Shift
+                  %li= link_to 'New', new_shift_path
+                  %li= link_to 'Clone', clone_shifts_path
+                - if can? :destroy, Shift
+                  %li= link_to 'Delete', delete_shifts_path
+            %li{ class: params[:controller] == 'tasks' ? 'active dropdown' : 'dropdown' }
+              %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                Tasks
+                %b.caret
+              %ul.dropdown-menu
+                %li= link_to 'List', tasks_path
+                - if can? :create, Task
+                  %li= link_to 'New', new_task_path
+            - if current_user.try(:role?, :admin)
+              %li= link_to 'Roles', roles_path
+          %ul.nav.navbar-nav.navbar-right
+            - if user_signed_in?
+              %li= link_to current_user.full_name, edit_user_registration_path
+              %li= link_to "Logout", destroy_user_session_path, method: :delete
+            - else
+              %li= link_to "Sign Up", new_user_registration_path
+              %li= link_to "Login", new_user_session_path
+    #body.container
+      %p.notice= notice
+      %p.alert= alert
+
+      = yield

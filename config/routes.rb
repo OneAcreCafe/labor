@@ -14,6 +14,8 @@ Volunteers::Application.routes.draw do
       get :clone
       post :clone, action: :do_clone
       get :schedule
+      get :delete
+      post :delete, action: :do_delete
     end
   end
 

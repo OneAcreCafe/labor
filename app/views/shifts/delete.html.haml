@@ -1,0 +1,13 @@
+%h1 Delete Shifts
+
+= form_tag delete_shifts_path do
+
+  .form-group
+    = label_tag nil, 'Range to Delete', class: ['col-sm-2', 'control-label']
+    .col-sm-10.input-daterange
+      = text_field :from, :start, data: { provide: :datepicker }, class: 'input-small'
+      %span.add-on to
+      = text_field :from, :end, data: { provide: :datepicker }, class: 'input-small'
+
+  .actions
+    = submit_tag 'Delete', class: [:btn, 'btn-default']

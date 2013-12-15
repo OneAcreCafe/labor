@@ -132,6 +132,19 @@ class ShiftsController < ApplicationController
     redirect_to action: :index
   end
 
+  def delete
+  end
+
+  def do_delete
+    date_format = '%Y/%m/%d'
+    from_start = DateTime.strptime( params[:from][:start], date_format )
+    from_end = DateTime.strptime( params[:from][:end], date_format )
+
+    Shift.where('start >= ? AND start < ?', from_start, from_end).destroy_all
+
+    redirect_to action: :index
+  end
+
   def generate_ical
     cal = Icalendar::Calendar.new
     @shifts.each do |shift|
