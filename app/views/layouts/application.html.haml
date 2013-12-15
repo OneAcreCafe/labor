@@ -15,7 +15,7 @@
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
             %li
-              = link_to 'Home', '#'
+              = link_to 'Home', root_path
             %li{ class: params[:controller] == 'shifts' ? 'active dropdown' : 'dropdown' }
               %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                 Shifts
