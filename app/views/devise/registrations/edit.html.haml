@@ -34,10 +34,10 @@
       = f.label :password_confirmation, class: ['col-sm-2', 'control-label']
       .col-sm-10= f.password_field :password_confirmation, class: 'form-control'
 
-    - if f.object.encrypted_password.present?
-      .form-group
-        = f.label :current_password, class: ['col-sm-2', 'control-label']
-        .col-sm-10= f.password_field :current_password, class: 'form-control'
+  - if f.object.encrypted_password.present?
+    .form-group
+      = f.label :current_password, class: ['col-sm-2', 'control-label']
+      .col-sm-10= f.password_field :current_password, class: 'form-control'
 
   - if can? :update, resource.roles
     .form-group

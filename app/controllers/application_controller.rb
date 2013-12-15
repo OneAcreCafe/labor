@@ -34,8 +34,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:account_update) {
-      |u| u.permit(:given_name, :family_name, :nickname, :email, :password, :password_confirmation, :current_password)
-    }
+    devise_parameter_sanitizer.for(:sign_up).concat([:given_name, :family_name, :nickname])
+    devise_parameter_sanitizer.for(:account_update).concat([:given_name, :family_name, :nickname])
   end
 end

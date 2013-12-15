@@ -9,15 +9,15 @@
 
   .form-group
     = f.label :family_name, class: ['col-sm-2', 'control-label']
-    .col-sm-10= f.text_field :family_name, {:autofocus => true, class: 'form-control'}
+    .col-sm-10= f.text_field :family_name, class: 'form-control'
 
   .form-group
     = f.label :nickname, class: ['col-sm-2', 'control-label']
-    .col-sm-10= f.text_field :nickname, {:autofocus => true, class: 'form-control'}
+    .col-sm-10= f.text_field :nickname, class: 'form-control'
 
   .form-group
     = f.label :email, class: ['col-sm-2', 'control-label']
-    .col-sm-10= f.email_field :email, {:autofocus => true, class: 'form-control'}
+    .col-sm-10= f.email_field :email, class: 'form-control'
 
   - if f.object.password_required?
     .form-group
@@ -29,6 +29,6 @@
       .col-sm-10= f.password_field :password_confirmation, class: 'form-control'
 
   %div
-    = f.submit "Sign up", class: [:btn, 'btn-default']
+    = f.submit 'Sign Up', class: [:btn, 'btn-default']
 
-= render "devise/shared/links"
+= render 'devise/shared/links'

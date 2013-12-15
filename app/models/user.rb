@@ -7,6 +7,14 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :shifts, -> { uniq }
   has_and_belongs_to_many :roles, -> { uniq }
 
+  def role?(role)
+    roles.collect(&:name).map(&:downcase).include? role.to_s
+  end
+
+  def display_name
+    name = self.nickname || self.given_name || self.email || 'Nameless'
+  end
+  
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth.provider
@@ -28,10 +36,6 @@ class User < ActiveRecord::Base
   
   def password_required?
     super && provider.blank?
-  end
-
-  def role?(role)
-    roles.collect(&:name).map(&:downcase).include? role.to_s
   end
   
   def update_with_password(params, *options)
