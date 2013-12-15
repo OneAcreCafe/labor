@@ -39,6 +39,9 @@ gem 'bootstrap-sass-rails'
 
 gem 'bootstrap-datepicker-rails'
 
+# Markdown for pages
+gem 'rdiscount'
+
 gem 'devise'
 gem 'cancan'
 gem 'omniauth-facebook', '= 1.4.0'

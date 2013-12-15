@@ -11,11 +11,12 @@
     .navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
       .container
         .navbar-header
-          = link_to 'Volunteers', '#', class: 'navbar-brand'
+          = link_to root_path, class: 'navbar-brand' do
+            = image_tag 'http://dhappy.org/.../image/logo/One%20Acre%20Cafe/', id: 'logo'
+            Volunteers
         .navbar-collapse.collapse
           %ul.nav.navbar-nav
             %li
-              = link_to 'Home', root_path
             %li{ class: params[:controller] == 'shifts' ? 'active dropdown' : 'dropdown' }
               %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
                 Shifts
@@ -48,10 +49,11 @@
                   %b.caret
                 %ul.dropdown-menu
                   %li= link_to 'List', users_path
-                  - if can? :create, Task
+                  - if can? :create, User
                     %li= link_to 'New', new_user_path
                   - if current_user.try(:role?, :admin)
                     %li= link_to 'Roles', roles_path
+            %li= link_to 'About', about_path
 
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?

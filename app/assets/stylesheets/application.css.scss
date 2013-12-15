@@ -17,6 +17,10 @@ img[src='/images/facebook-login.svg'] {
     max-width: 6em;
 }
 
+#logo {
+    max-width: 1em;
+}
+
 .dropdown-menu {
     .iconed, .glyphicon {
         display: inline-block;
@@ -30,4 +34,8 @@ img[src='/images/facebook-login.svg'] {
         border: 1px solid;
         padding: .25em .5em;
     }
+}
+
+body a:visited {
+    color: #D63385;
 }
