@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
     name = self.given_name
     name += ' ' if name and self.family_name
     name += self.family_name if self.family_name
-    name ||= self.email || 'Nameless'
+    name ||= self.nickname || self.email || 'Nameless'
   end
   
   def self.from_omniauth(auth)

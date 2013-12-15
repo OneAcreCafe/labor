@@ -88,10 +88,13 @@ class ShiftsController < ApplicationController
       authenticate_user!
     end
 
+    @workers = params[:shift][:worker_ids].try(:map){ |id| User.find(id) if not id.empty? }.compact if can? :read, User
+    @workers ||= [current_user]
+
     @shifts = []
     params[:shift_ids].try(:each) do |id|
       shift = Shift.find(id)
-      shift.workers << current_user
+      shift.workers.concat(@workers)
       @shifts << shift
     end
   end

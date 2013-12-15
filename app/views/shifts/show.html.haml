@@ -11,7 +11,7 @@
   = @shift.size
 %p
   %b Task:
-  = @shift.task.name if @shift.task
+  = link_to @shift.task.name, @shift.task if @shift.task
 -# if can? :read, @shift.workers
 - if can? :read, User
   %p
@@ -21,7 +21,7 @@
     - else
       %ul
         - @shift.workers.each do |worker|
-          %li= worker.email
+          %li= worker.full_name
 
 - if @shift.worker?(current_user)
   %p You are signed up for this shift

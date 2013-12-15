@@ -1,3 +1,9 @@
 %h1 Taken Shifts
 
+- if @workers
+  %h2 Workers
+  %ul
+    - @workers.each do |worker|
+      %li= worker.full_name
+
 = render 'table'
