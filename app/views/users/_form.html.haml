@@ -22,19 +22,13 @@
     = f.label :email, class: ['col-sm-2', 'control-label']
     .col-sm-10= f.email_field :email, class: 'form-control'
 
-  - if f.object.password_required?
-    .form-group
-      = f.label :password, class: ['col-sm-2', 'control-label']
-      .col-sm-10= f.password_field :password, class: 'form-control'
+  .form-group
+    = f.label :password, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.password_field :password, class: 'form-control'
 
-    .form-group
-      = f.label :password_confirmation, class: ['col-sm-2', 'control-label']
-      .col-sm-10= f.password_field :password_confirmation, class: 'form-control'
-
-  - if f.object.encrypted_password.present?
-    .form-group
-      = f.label :current_password, class: ['col-sm-2', 'control-label']
-      .col-sm-10= f.password_field :current_password, class: 'form-control'
+  .form-group
+    = f.label :password_confirmation, class: ['col-sm-2', 'control-label']
+    .col-sm-10= f.password_field :password_confirmation, class: 'form-control'
 
   - if can? :update, @user.roles
     .form-group
