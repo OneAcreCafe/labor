@@ -2,11 +2,14 @@
 <% start = Date.commercial(Date.today.year, 1 + Date.today.cweek, 1).to_datetime %>
 <% (start.to_i .. (start + 5.days).to_i).step(24*60*60).each_with_index do |timestamp, day_index| %>
 <% day = Time.at(timestamp) %>
+<% (11 .. 14).each_with_index do |hour, hour_index| %>
+<% day = day.change(hour: hour) %>
 <% ['server', 'sous-chef', 'greeter', 'janitor'].each_with_index do |task, task_index| %>
-<%= (day_index + 1) * 3 + (task_index + 1) * 5 %>:
+<%= (day_index + 1) * 3 + (task_index + 1) * 5 + (hour_index + 1) * 7 %>:
   start: <%= day %>
   end: <%= day + 1.hour %>
   size: 2
   task: <%= task %>
+<% end %>
 <% end %>
 <% end %>
