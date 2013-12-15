@@ -44,8 +44,7 @@
       = f.label :roles, class: ['col-sm-2', 'control-label']
       .col-sm-10= f.collection_select :roles, Role.all, :id, :name, { prompt: "Roles" , :selected => resource.roles.collect(&:id) }, { multiple: true }
 
-  %div
-    = f.submit 'Update', class: [:btn, 'btn-default']
+  %div= f.submit 'Update', class: [:btn, 'btn-default']
 
 %h3 Cancel my account
 

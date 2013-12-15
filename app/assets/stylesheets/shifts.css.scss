@@ -225,6 +225,16 @@ input:checked + .icon {
     border-bottom: none;
 }
 
+.schedule .workers li a {
+    display: block;
+    height: 100%;
+}
+
+.schedule .workers li a:hover {
+    background-color: #FF6;
+    text-decoration: none;
+}
+
 .schedule .workers .taken {
     background-color: #EEE;
 }
