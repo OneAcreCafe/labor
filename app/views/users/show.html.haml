@@ -1,4 +1,26 @@
 %p#notice= notice
 
+%ul
+  %li
+    Given Name:
+    = @user.given_name
+  %li
+    Family Name:
+    = @user.family_name
+  %li
+    Nickname:
+    = @user.nickname
+  %li
+    E-Mail:
+    = @user.email
+  %li
+    - if @user.roles.count == 0
+      No Roles
+    - else
+      Roles:
+      %ul
+        - @user.roles.each do |role|
+          %li= role.name
+
 = link_to 'Edit', edit_user_path(@user), class: [:btn, 'btn-default']
 = link_to 'Back', users_path, class: [:btn, 'btn-default']
