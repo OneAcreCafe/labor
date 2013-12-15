@@ -47,17 +47,16 @@ body {
 }
 
 .title {
-    padding: 0 .25em;
+    padding: .25em .25em .25em .5em;
     margin: 0 .5em;
     display: inline-block;
     margin-bottom: .25em;
     font-size: 125%;
+    background-color: #F5F5F5;
 }
 
 .open {
     background-color: #B3BFE8;
-    border: 1px solid darkblue;
-    border-style: solid none;
 }
 
 .shift img {
@@ -80,12 +79,19 @@ label {
 
 .hour {
     list-style: none;
-    margin-bottom: 0;
-    margin-top: -1px;
 }
 
 .hour li {
     display: inline-block;
+}
+
+.shifts, .shift, .hour {
+    padding: 0;
+    margin: 0;
+}
+
+.shifts {
+    padding-top: .25em;
 }
 
 input[type="radio"] {
@@ -147,7 +153,7 @@ input:checked + .icon {
 }
 
 .title, .hour {
-    border: 1px solid;
+    border-width: 1px;
     border-style: solid solid none solid;
 }
 
@@ -158,10 +164,6 @@ input:checked + .icon {
 
 .hours:last-child .hour {
     border-bottom: 1px solid;
-}
-
-.shifts {
-    padding: 0;
 }
 
 [weekday='0'], [weekday='6'] {
