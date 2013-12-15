@@ -261,3 +261,14 @@ input:checked + .icon {
     display: inline;
     width: auto;
 }
+
+#loading-modal {
+    display: block;
+}
+
+#shift-table, #task-table {
+    th, td {
+        border: 1px solid;
+        padding: .25em .5em;
+    }
+}

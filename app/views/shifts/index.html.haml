@@ -3,6 +3,13 @@
 - else
   %button#take-shifts.btn.btn-default.btn-primary Take Shifts
 
+  #loading-modal.modal.hide.fade.in{'aria-hidden' => false}
+    .modal-header
+      %button.close{ data: { dismiss: 'modal' } } ×
+      %h3 Calorie Counter
+    .modal-body
+      %p= "A recipe builder using #{link_to 'Freebase', '//freebase.com'}. All information is public domain."
+
   #shifts-form
     = form_tag take_shifts_path do
       - if can? :read, User
