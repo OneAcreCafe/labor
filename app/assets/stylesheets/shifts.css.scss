@@ -150,6 +150,11 @@ input:checked + .icon {
     border-style: solid solid none solid;
 }
 
+.title {
+    border-top-style: double;
+    border-top-width: 3px;
+}
+
 .hours:hover {
     background-color: #EEE;
     font-weight: bold;
