@@ -35,7 +35,7 @@
                 %ul.workers
                   - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).each do |shift|
                     - shift.workers.each do |worker|
-                      - if worker == current_user || can? :read, User
+                      - if worker == current_user or can? :read, User
                         %li= link_to worker.display_name, shift
                       - else
                         %li.taken= link_to '', shift
