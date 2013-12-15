@@ -9,7 +9,7 @@
     %b Users:
     %ul
       - @role.users.each do |user|
-        %li= user.email
+        %li= user.full_name
 
 - if can? :update, @role
   = link_to 'Edit', edit_role_path(@role), class: [:btn, 'btn-default']
