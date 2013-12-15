@@ -1,4 +1,6 @@
 function renderShiftsCalendar() {
+    $('#loading-modal').modal()
+
     var day = d3.time.format( '%-d' ),
         weekday = d3.time.format( '%w' ),
         week = d3.time.format( '%U' ),
@@ -142,6 +144,8 @@ function renderShiftsCalendar() {
                 } )
 
                 $(document).trigger( 'shifts:loaded' )
+
+                $('#loading-modal').modal( 'hide' )
             } )
         } )
     }

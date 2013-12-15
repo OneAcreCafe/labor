@@ -262,13 +262,15 @@ input:checked + .icon {
     width: auto;
 }
 
-#loading-modal {
-    display: block;
-}
-
 #shift-table, #task-table {
     th, td {
         border: 1px solid;
         padding: .25em .5em;
     }
+}
+
+.loading-icon {
+    max-height: 5em;
+    display: block;
+    margin: auto;
 }
