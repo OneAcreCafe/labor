@@ -1,10 +1,12 @@
 # Next Monday
 <% start = Date.commercial(Date.today.year, 1 + Date.today.cweek, 1).to_datetime %>
-<% (start.to_i .. (start + 5.days).to_i).step(24*60*60).each_with_index do |timestamp, index| %>
+<% (start.to_i .. (start + 5.days).to_i).step(24*60*60).each_with_index do |timestamp, day_index| %>
 <% day = Time.at(timestamp) %>
-<%= index %>:
+<% ['server', 'sous-chef', 'greeter', 'janitor'].each_with_index do |task, task_index| %>
+<%= (day_index + 1) * 3 + (task_index + 1) * 5 %>:
   start: <%= day %>
   end: <%= day + 1.hour %>
   size: 2
-  task: server
+  task: <%= task %>
+<% end %>
 <% end %>
