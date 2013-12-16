@@ -23,3 +23,4 @@ $( function() {
     } else if( navigator.userAgent.match( /MSIE/ ) ) {
         $('body').addClass( 'ie' )
     }
+} )
