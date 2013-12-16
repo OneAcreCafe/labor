@@ -3,7 +3,7 @@
   %head
     %title Volunteers
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
-    /[IE le 11]
+    /[if lte IE 11]
       = stylesheet_link_tag    "ie", media: "all"
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/d3/3.3.10/d3.min.js"
     = javascript_include_tag "application", "data-turbolinks-track" => true
