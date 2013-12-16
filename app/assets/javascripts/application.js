@@ -16,3 +16,10 @@
 //= require twitter/bootstrap
 //= require bootstrap-datepicker
 //= require_tree .
+
+$( function() {
+    if( navigator.userAgent.match( /Chrome/ ) ) {
+        $('body').addClass( 'chrome' )
+    } else if( navigator.userAgent.match( /MSIE/ ) ) {
+        $('body').addClass( 'ie' )
+    }

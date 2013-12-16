@@ -192,10 +192,6 @@ $(document).on( 'shifts:loaded', function() {
             $input.prop( { checked: false } )
         }
     } )
-
-    if( navigator.userAgent.match( /Chrome/ ) ) {
-        $('body').addClass( 'chrome' )
-    }
 } )
 
 $.fn.datepicker.defaults.format = 'yyyy/m/d'

@@ -21,6 +21,10 @@ img[src='/images/facebook-login.svg'] {
     max-width: 1em;
 }
 
+.ie #logo {
+    display: none;
+}
+
 .dropdown-menu {
     .iconed, .glyphicon {
         display: inline-block;
