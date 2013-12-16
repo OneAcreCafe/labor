@@ -21,8 +21,14 @@ img[src='/images/facebook-login.svg'] {
     max-width: 1em;
 }
 
-.ie #logo {
-    display: none;
+.navbar-brand {
+    padding-left: 1em;
+}
+
+[browser='ie'], [browser='firefox'] {
+    #logo {
+        display: none;
+    }
 }
 
 .dropdown-menu {
@@ -46,4 +52,9 @@ body a:visited {
 
 a.btn:visited {
     color: #555;
+}
+
+// Firefox and IE
+.dropdown-menu .glyphicon {
+    float: left;
 }

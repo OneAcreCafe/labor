@@ -18,9 +18,9 @@
 //= require_tree .
 
 $( function() {
-    if( navigator.userAgent.match( /Chrome/ ) ) {
-        $('body').addClass( 'chrome' )
-    } else if( navigator.userAgent.match( /MSIE/ ) ) {
-        $('body').addClass( 'ie' )
-    }
+    $('body').attr( 'browser', 
+                    navigator.userAgent.match( /Chrome/ ) ? 'chrome'
+                    : navigator.userAgent.match( /MSIE/ ) ? 'ie'
+                    : navigator.userAgent.match( /Firefox/ ) ? 'firefox'
+                    : 'unknown' )
 } )

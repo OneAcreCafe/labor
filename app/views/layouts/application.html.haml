@@ -59,7 +59,8 @@
                     %li= link_to 'New', new_user_path
                   - if current_user.try(:role?, :admin)
                     %li= link_to 'Roles', roles_path
-            %li= link_to 'About', about_path
+            %li{ class: (params[:controller] == 'pages' and params[:action] == 'about') ? 'active' : nil }
+              = link_to 'About', about_path
 
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
@@ -73,6 +74,3 @@
       %p.alert= alert
 
       = yield
-
-      /[if IE]
-        %p IE only
