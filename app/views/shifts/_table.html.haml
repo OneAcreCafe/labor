@@ -16,7 +16,7 @@
       %td= link_to shift.task.name, shift if shift.task
       %td
         = link_to 'Show', shift, class: [:btn, 'btn-default']
-        - if can? :update, shift
+        - if defined? can? and can? :update, shift
           = link_to 'Edit', edit_shift_path(shift), class: [:btn, 'btn-default']
-        - if can? :destroy, shift
+        - if defined? can? and can? :destroy, shift
           = link_to 'Delete', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
