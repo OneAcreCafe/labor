@@ -1,6 +1,3 @@
 %h1 Schedule for #{@user.full_name} - #{@start.strftime('%b %d')} – #{@end.strftime('%b %d')} 
 
 = render 'shifts/table'
-
-- if defined? params
-  = params.nil?
