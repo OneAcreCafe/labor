@@ -1,7 +1,6 @@
-%h1 Editing drop
+%h1 Editing Drop
 
 = render 'form'
 
-= link_to 'Show', @drop
-\|
-= link_to 'Back', drops_path
+= link_to 'Show', @drop, class: [:btn, 'btn-default']
+= link_to 'Back', drops_path, class: [:btn, 'btn-default']

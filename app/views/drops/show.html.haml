@@ -1,15 +1,10 @@
 %p#notice= notice
 
-%p
-  %b Shift:
-  = @drop.shift
-%p
-  %b Time:
-  = @drop.time
-%p
-  %b Reason:
-  = @drop.reason
+%ul
+  %li= "User: #{@drop.user.full_name}" if @drop.user
+  %li Shift: #{@drop.shift.to_s}
+  %li Time: #{@drop.time}
+  %li Reason: #{@drop.reason}
 
-= link_to 'Edit', edit_drop_path(@drop)
-\|
-= link_to 'Back', drops_path
+= link_to 'Edit', edit_drop_path(@drop), class: [:btn, 'btn-default']
+= link_to 'Back', drops_path, class: [:btn, 'btn-default']

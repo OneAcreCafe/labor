@@ -40,14 +40,27 @@
                   %li= link_to 'Clone', clone_shifts_path
                 - if can? :destroy, Shift
                   %li= link_to 'Delete', delete_shifts_path
-            %li{ class: params[:controller] == 'tasks' ? 'active dropdown' : 'dropdown' }
-              %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
-                Tasks
-                %b.caret
-              %ul.dropdown-menu
-                %li= link_to 'List', tasks_path
-                - if can? :create, Task
-                  %li= link_to 'New', new_task_path
+
+            - if can? :read, Drop
+              %li{ class: params[:controller] == 'drops' ? 'active dropdown' : 'dropdown' }
+                %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                  Drops
+                  %b.caret
+                %ul.dropdown-menu
+                  %li= link_to 'List', drops_path
+                  - if can? :create, Drop
+                    %li= link_to 'New', new_task_path
+
+            - if can? :read, Task
+              %li{ class: params[:controller] == 'tasks' ? 'active dropdown' : 'dropdown' }
+                %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
+                  Tasks
+                  %b.caret
+                %ul.dropdown-menu
+                  %li= link_to 'List', tasks_path
+                  - if can? :create, Task
+                    %li= link_to 'New', new_task_path
+
             - if can? :read, User
               %li{ class: params[:controller] == 'users' ? 'active dropdown' : 'dropdown' }
                 %a.dropdown-toggle{ href: '#', data: { toggle: 'dropdown' } }
@@ -59,6 +72,7 @@
                     %li= link_to 'New', new_user_path
                   - if current_user.try(:role?, :admin)
                     %li= link_to 'Roles', roles_path
+
             %li{ class: (params[:controller] == 'pages' and params[:action] == 'about') ? 'active' : nil }
               = link_to 'About', about_path
 

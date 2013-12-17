@@ -1,5 +1,7 @@
 class DropsController < ApplicationController
-  before_action :set_drop, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!
+  load_and_authorize_resource
+  # skip_authorize_resource only: [:open, :take, :schedule, :my]
 
   # GET /drops
   # GET /drops.json
@@ -25,6 +27,9 @@ class DropsController < ApplicationController
   # POST /drops.json
   def create
     @drop = Drop.new(drop_params)
+
+    @drop.time = Time.now
+    @drop.user = current_user
 
     respond_to do |format|
       if @drop.save

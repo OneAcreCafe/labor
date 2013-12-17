@@ -9,15 +9,19 @@
   .form-group.datetime
     = f.label :start, class: ['col-sm-2', 'control-label']
     .col-sm-10= f.datetime_select :start, {}, { class: 'form-control' }
+
   .form-group.datetime
     = f.label :end, class: ['col-sm-2', 'control-label']
     .col-sm-10= f.datetime_select :end, {}, { class: 'form-control' }
+
   .form-group
     = f.label :size, class: ['col-sm-2', 'control-label']
     .col-sm-10= f.text_field :size, class: 'form-control'
+
   .form-group
     = f.label :task, class: ['col-sm-2', 'control-label']
     .col-sm-10= f.collection_select :task_id, Task.all, :id, :name, { prompt: 'Task' , selected: @shift.task.try(:id) }, class: 'form-control'
+
   .form-group
     = f.label :workers, class: ['col-sm-2', 'control-label']
     .col-sm-10= f.collection_select :worker_ids, User.all, :id, :full_name, { selected: @shift.workers.collect(&:id) }, { multiple: true, class: 'form-control' }
