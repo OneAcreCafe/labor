@@ -1,3 +1,3 @@
-%h1 Schedule for #{@user.full_name}
+%h1 Schedule for #{@user.full_name} - #{@start.strftime('%b %D')} #{@end.strftime('%b %D')} 
 
-= @shifts.count.to_s
+= render 'shifts/table'

@@ -4,10 +4,13 @@ namespace :email do
   desc "Mail out a weekly schedule to all users"
   task :'schedule' => :environment do
     User.all.each do |user|
-      nextMonday = Date.commercial(Date.today.year, 1 + Date.today.cweek, 1).to_datetime
-      shifts = user.shifts.where('start >= ? AND start < ?', nextMonday, nextMonday + 1.week)
+      start_date = Date.commercial(Date.today.year, 1 + Date.today.cweek, 1).to_datetime # Next Monday
+      end_date = nextMonday + 1.week
       puts "Sending: " + user.email + ": " + shifts.count.to_s
-      ScheduleMailer.schedule_email(user, shifts).deliver
+      shifts = user.shifts.where('start >= ? AND start < ?', start_date, end_date)
+      if shifts.count > 0
+        ScheduleMailer.schedule_email(user, shifts, start_date, end_date).deliver
+      end
     end
   end
 end
