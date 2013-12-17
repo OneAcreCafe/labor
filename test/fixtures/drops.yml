@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  shift_id: 
+  time: 2013-12-17 12:11:17
+  reason: MyString
+
+two:
+  shift_id: 
+  time: 2013-12-17 12:11:17
+  reason: MyString

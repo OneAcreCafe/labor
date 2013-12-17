@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Shift:
+  = @drop.shift
+%p
+  %b Time:
+  = @drop.time
+%p
+  %b Reason:
+  = @drop.reason
+
+= link_to 'Edit', edit_drop_path(@drop)
+\|
+= link_to 'Back', drops_path
