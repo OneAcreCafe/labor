@@ -20,7 +20,7 @@
 $( function() {
     $('body').attr( 'browser', 
                     navigator.userAgent.match( /Chrome/ ) ? 'chrome'
-                    : navigator.userAgent.match( /MSIE/ ) ? 'ie'
                     : navigator.userAgent.match( /Firefox/ ) ? 'firefox'
+                    : navigator.userAgent.match( /MSIE|Trident/ ) ? 'ie'
                     : 'unknown' )
 } )
