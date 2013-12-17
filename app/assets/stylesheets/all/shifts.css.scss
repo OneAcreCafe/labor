@@ -13,12 +13,6 @@ body {
     margin-top: 7px;
 }
 
-#users {
-    position: fixed;
-    top: 8em;
-    right: 1em;
-}
-
 .day {
     border: 1px solid;
 }
@@ -269,4 +263,8 @@ input:checked + .icon {
     max-height: 5em;
     display: block;
     margin: auto;
+}
+
+input[name='shift_ids[]'] {
+    display: none;
 }
