@@ -17,7 +17,7 @@
       %td= user.nickname
       %td= link_to user.email, "mailto:" + user.email
       %td= user.shifts.count
-      %td= user.shifts.where('end > ?', Time.now).count
+      %td= user.shifts.where('"end" > ?', Time.now).count
       %td
         = link_to 'Show', user, class: [:btn, 'btn-default']
         = link_to 'Edit', edit_user_path(user), class: [:btn, 'btn-default']
