@@ -173,7 +173,11 @@ $(document).on( 'shifts:loaded', function() {
                             )
             } )
             if( ids.length > 0 ) {
-                $form.submit()
+                if( $('#users-modal').size() > 0 ) {
+                    $('#users-modal').modal()
+                } else {
+                    $form.submit()
+                }
             }
         } )
 

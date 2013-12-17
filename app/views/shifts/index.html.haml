@@ -13,6 +13,16 @@
   #shifts-form
     = form_tag take_shifts_path do
       - if can? :read, User
-        = collection_select :shift, :worker_ids, User.all, :id, :full_name, {}, { multiple: true, id: 'users' }
+        #users-modal.modal.fade{'aria-hidden' => false}
+          .modal-dialog
+            .modal-content
+              .modal-header
+                %button.close{ data: { dismiss: 'modal' } } ×
+                %h3.modal-title Select Users
+              .modal-body
+                = collection_select :shift, :worker_ids, User.all, :id, :full_name, {}, { multiple: true, id: 'users', class: 'form-control' }
+              .modal-footer
+                %button.btn.btn-default{ data: { dismiss: 'modal' } } Close
+                = submit_tag 'Add Shifts', class: [:btn, 'btn-primary ']
 
   #shifts
