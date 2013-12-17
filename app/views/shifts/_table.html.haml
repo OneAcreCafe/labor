@@ -2,25 +2,31 @@
 
 %table#shift-table
   %tr
-    %th Start
-    %th End
+    %th Day
+    %th Time
     %th Size
     %th Needed
     %th Task
     - unless in_mail
       %th
 
-  - @shifts.each do |shift|
-    %tr
-      %td= shift.start
-      %td= shift.end
-      %td= shift.size
-      %td= shift.needed
-      %td= link_to_if(!in_mail, shift.task.name, shift) if shift.task
-      - unless in_mail
-        %td
-          = link_to 'Show', shift, class: [:btn, 'btn-default']
-          - if defined? can? and can? :update, shift
-            = link_to 'Edit', edit_shift_path(shift), class: [:btn, 'btn-default']
-          - if defined? can? and can? :destroy, shift
-            = link_to 'Delete', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+  - @shifts.group_by{ |s| s.start.to_date }.each do |day, shifts_by_day|
+    - shifts_by_day.group_by{ |s| s.start.strftime('%H:%M') + "–" + s.end.strftime('%H:%M') }.each_with_index do |group, group_index|
+      - hours = group.first
+      - shifts = group.last
+      - shifts.each_with_index do |shift, shift_index|
+        %tr
+          - if group_index == 0 and shift_index == 0
+            %td{ rowspan: shifts_by_day.count }= day
+          - if shift_index == 0
+            %td{ rowspan: shifts.count }= hours
+          %td= shift.size
+          %td= shift.needed
+          %td= link_to_if(!in_mail, shift.task.name, shift) if shift.task
+          - unless in_mail
+            %td
+              = link_to 'Show', shift, class: [:btn, 'btn-default']
+              - if defined? can? and can? :update, shift
+                = link_to 'Edit', edit_shift_path(shift), class: [:btn, 'btn-default']
+              - if defined? can? and can? :destroy, shift
+                = link_to 'Delete', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
