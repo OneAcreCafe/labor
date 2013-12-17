@@ -5,7 +5,7 @@
     %th Size
     %th Needed
     %th Task
-    - if params[:controller] == 'shifts'
+    - if params
       %th
 
   - @shifts.each do |shift|
@@ -14,8 +14,8 @@
       %td= shift.end
       %td= shift.size
       %td= shift.needed
-      %td= link_to_if params[:controller] == 'shifts',  shift.task.name, shift if shift.task
-      - if params[:controller] == 'shifts'
+      %td= link_to_if params,  shift.task.name, shift if shift.task
+      - if params
         %td
           = link_to 'Show', shift, class: [:btn, 'btn-default']
           - if defined? can? and can? :update, shift
