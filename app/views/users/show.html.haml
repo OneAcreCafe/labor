@@ -21,6 +21,13 @@
       %ul
         - @user.roles.each do |role|
           %li= role.name
+  - if @user.shifts.count == 0
+    %li No Shifts
+
+- if @user.shifts.count > 0
+  - @shifts = @user.shifts
+  = render 'shifts/table'
+    
 
 = link_to 'Edit', edit_user_path(@user), class: [:btn, 'btn-default']
 = link_to 'Back', users_path, class: [:btn, 'btn-default']
