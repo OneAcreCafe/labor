@@ -13,6 +13,10 @@
  *= require_tree ./all
  *= require twitter/bootstrap
  */
+
+/* hack to fix overlap issue */
+#body { margin-top: 50px; }
+
 img[src='/images/facebook-login.svg'] {
     max-width: 6em;
 }

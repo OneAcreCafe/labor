@@ -63,6 +63,9 @@
               = link_to 'About', about_path
 
           %ul.nav.navbar-nav.navbar-right
+            - if params[:controller] == 'shifts'
+              %li
+                %button#take-shifts.btn.btn-default.btn-primary Take Shifts
             - if user_signed_in?
               %li= link_to current_user.full_name, edit_user_registration_path
               %li= link_to "Logout", destroy_user_session_path, method: :delete
