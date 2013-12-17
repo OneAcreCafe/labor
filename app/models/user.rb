@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
 
   def full_name
     name = self.given_name if not self.given_name.try(:empty?)
-    name += ' ' if name and self.family_name
-    name += self.family_name if not self.family_name.try(:empty?)
+    name += ' ' if name and self.family_name.try(:empty?)
+    name = (name || '') + self.family_name if self.family_name and not self.family_name.try(:empty?)
     name ||= self.nickname || self.email || 'Nameless'
   end
   
