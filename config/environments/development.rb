@@ -29,8 +29,4 @@ Volunteers::Application.configure do
 
   # For devise
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-  ActionMailer::Base.smtp_settings = {
-    openssl_verify_mode: 'none'
-  }
 end
