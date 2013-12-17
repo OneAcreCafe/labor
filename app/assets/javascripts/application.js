@@ -17,10 +17,15 @@
 //= require bootstrap-datepicker
 //= require_tree .
 
-$( function() {
-    $('body').attr( 'browser', 
-                    navigator.userAgent.match( /Chrome/ ) ? 'chrome'
-                    : navigator.userAgent.match( /Firefox/ ) ? 'firefox'
-                    : navigator.userAgent.match( /MSIE|Trident/ ) ? 'ie'
-                    : 'unknown' )
-} )
+( function() {
+    function setBrowser() {
+        $('body').attr( 'browser', 
+                        navigator.userAgent.match( /Chrome/ ) ? 'chrome'
+                        : navigator.userAgent.match( /Firefox/ ) ? 'firefox'
+                        : navigator.userAgent.match( /MSIE|Trident/ ) ? 'ie'
+                        : 'unknown' )
+    }
+    
+    $( setBrowser )
+    $(document).on( 'page:load', setBrowser )
+} )()
