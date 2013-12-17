@@ -6,6 +6,6 @@ class ScheduleMailer < ActionMailer::Base
     @shifts = shifts
     @start = start_date
     @end = end_date
-    mail(to: @user.email, subject: '[OAC] Weekly Schedule: ' + @start.strftime('%b %D'))
+    mail(to: @user.email, subject: '[OAC] Weekly Schedule: ' + @start.strftime('%b %d'))
   end
 end
