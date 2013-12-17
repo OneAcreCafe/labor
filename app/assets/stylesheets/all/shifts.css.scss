@@ -163,6 +163,10 @@ input:checked + .icon {
     font-weight: bold;
 }
 
+.hours:hover .open {
+    background-color: #9BD;
+}
+
 .hours:last-child .hour {
     border-bottom: 1px solid;
 }
@@ -261,13 +265,6 @@ input:checked + .icon {
 .datetime select {
     display: inline;
     width: auto;
-}
-
-#shift-table, #task-table {
-    th, td {
-        border: 1px solid;
-        padding: .25em .5em;
-    }
 }
 
 .loading-icon {
