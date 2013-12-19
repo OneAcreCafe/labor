@@ -121,7 +121,7 @@ class ShiftsController < ApplicationController
 
     originals = Shift.where('start >= ? AND start <= ?', from_start, from_end)
 
-    originals.each do |shift|
+    originals.find_each do |shift|
       new = shift.dup
       new.workers = []
       new.start = to_start + (shift.start.to_datetime - from_start)
@@ -151,9 +151,18 @@ class ShiftsController < ApplicationController
     render :index
   end
 
+  def drop
+    @drop = Drop.new
+    render 'drops/new'
+  end
+
+  def do_drop
+    
+  end
+
   def generate_ical
     cal = Icalendar::Calendar.new
-    @shifts.each do |shift|
+    @shifts.find_each do |shift|
       # create the event for this tool
       event = Icalendar::Event.new
       event.start = shift.start.strftime("%Y%m%dT%H%M%S")

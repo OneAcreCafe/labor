@@ -8,7 +8,7 @@
 
   .form-group
     = f.label :shift, class: ['col-sm-2', 'control-label']
-    .col-sm-10= f.collection_select :shift_id, current_user.shifts, :id, :to_s, {}, { class: 'form-control' }
+    .col-sm-10= f.collection_select :shift_id, current_user.shifts.order(:start), :id, :to_s, { selected: @shift ? @shift.id : nil }, { class: 'form-control' }
 
   .form-group
     = f.label :reason, class: ['col-sm-2', 'control-label']

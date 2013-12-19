@@ -8,15 +8,22 @@
     %th Reason
     %th
 
-  - @drops.each do |drop|
+  - count = 0
+  - @drops.find_each do |drop|
+    - if drop.user and (can? :read, User or drop.user == current_user)
+      - count += 1
+      %tr
+        %td= drop.user.full_name
+        %td= drop.shift
+        %td= drop.time
+        %td= drop.reason
+        %td
+          = link_to 'Show', drop, class: [:btn, 'btn-default']
+          = link_to 'Edit', edit_drop_path(drop), class: [:btn, 'btn-default']
+          = link_to 'Destroy', drop, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+  - if count == 0
     %tr
-      %td= drop.user.full_name if drop.user
-      %td= drop.shift
-      %td= drop.time
-      %td= drop.reason
-      %td
-        = link_to 'Show', drop, class: [:btn, 'btn-default']
-        = link_to 'Edit', edit_drop_path(drop), class: [:btn, 'btn-default']
-        = link_to 'Destroy', drop, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+      %td{ colspan: 5 } No Drops
+    
 
 = link_to 'New Drop', new_drop_path, class: [:btn, 'btn-default']

@@ -5,7 +5,7 @@
     %th Name
     %th
 
-  - @roles.each do |role|
+  - @roles.find_each do |role|
     %tr
       %td= role.name
       %td

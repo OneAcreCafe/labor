@@ -1,6 +1,4 @@
 Volunteers::Application.routes.draw do
-  resources :drops
-
   resources :roles
 
   devise_for :users, path_names: { sign_in: "login", sign_out: "logout" },
@@ -8,6 +6,8 @@ Volunteers::Application.routes.draw do
       omniauth_callbacks: "omniauth_callbacks",
       registrations: "registrations"
     }
+
+  resources :tasks
 
   resources :shifts do
     collection do
@@ -19,9 +19,14 @@ Volunteers::Application.routes.draw do
       get :delete
       post :delete, action: :do_delete
     end
+
+    member do
+      get :drop
+      post :drop, action: :do_drop
+    end
   end
 
-  resources :tasks
+  resources :drops
 
   scope "/admin" do
     resources :users

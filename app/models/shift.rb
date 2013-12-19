@@ -2,9 +2,10 @@
 class Shift < ActiveRecord::Base
   belongs_to :task
   has_and_belongs_to_many :workers, -> { uniq }, class_name: "User"
+  has_many :drops
 
   def needed
-    (size || 0) - workers.count
+    [size, (size || 0) - workers.count + drops.count].min
   end
 
   def worker?(user)

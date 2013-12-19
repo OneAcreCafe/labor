@@ -7,7 +7,7 @@
     %th Icon
     %th
 
-  - @tasks.each do |task|
+  - @tasks.find_each do |task|
     %tr
       %td= task.name
       %td= task.description

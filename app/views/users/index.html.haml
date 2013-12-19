@@ -10,7 +10,7 @@
     %th Unworked
     %th
 
-  - @users.each do |user|
+  - @users.find_each do |user|
     %tr
       %td= user.given_name
       %td= user.family_name

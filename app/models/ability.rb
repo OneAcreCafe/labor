@@ -8,9 +8,10 @@ class Ability
       can :manage, :all
     else
       can :read, :all
+      can :create, Drop
 
       if user.role? :manager
-        can :manage, [Shift, Task, User]
+        can :manage, [Shift, Task, User, Drop]
       else
         cannot :read, User
       end

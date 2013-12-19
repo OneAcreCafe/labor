@@ -30,6 +30,8 @@ class DropsController < ApplicationController
 
     @drop.time = Time.now
     @drop.user = current_user
+    puts "Create Drop: " + @drop.shift.workers.count.to_s
+    @drop.shift.workers.delete(@drop.user)
 
     respond_to do |format|
       if @drop.save

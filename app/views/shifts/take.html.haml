@@ -3,7 +3,7 @@
 - if @workers
   %h2 Workers
   %ul
-    - @workers.each do |worker|
+    - @workers.find_each do |worker|
       %li= worker.full_name
 
 = render 'table'

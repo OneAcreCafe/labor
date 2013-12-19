@@ -19,7 +19,7 @@
     - else
       Roles:
       %ul
-        - @user.roles.each do |role|
+        - @user.roles.find_each do |role|
           %li= role.name
   - if @user.shifts.count == 0
     %li No Shifts
