@@ -11,6 +11,14 @@ body {
 
 #take-shifts {
     margin-top: 7px;
+    float: right;
+    margin-right: 8em;
+}
+
+.alert #take-shifts {
+    float: none;
+    display: inline;
+    margin-top: 0;
 }
 
 .day {
