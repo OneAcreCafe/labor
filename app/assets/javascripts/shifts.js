@@ -6,7 +6,9 @@ function renderShiftsCalendar() {
         week = d3.time.format( '%U' ),
         hour = d3.time.format( '%-I' ),
         meridianlessTime = d3.time.format( '%-I:%M' ),
-        time = d3.time.format( '%-I:%M%p' ),
+        time = function() {
+            return d3.time.format( '%-I:%M' ).apply( this, arguments ) + d3.time.format( '%p' ).apply( this, arguments ).toLowerCase()
+        },
         month = d3.time.format( '%B' ),
         year = d3.time.format( '%Y' ),
         monthNumber = d3.time.format( '%m' ),
