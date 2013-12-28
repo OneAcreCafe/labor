@@ -37,7 +37,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'haml-rails'
 gem 'bootstrap-sass-rails', '~> 3.0.3'
 
-# gem 'bootstrap-datepicker-rails'
+gem 'bootstrap-datepicker-rails'
 
 # Markdown for pages
 gem 'rdiscount'
