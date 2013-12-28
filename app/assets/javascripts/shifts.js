@@ -39,21 +39,10 @@ function renderShiftsCalendar() {
                     return nextWeek
                 }
 
-                var weekBounds = d3.nest()
-                    .key( function( d ) { return week( d.start ) } )
-                    .rollup( function( d ) {
-                        return {
-                            start: d3.min( d, function( d ) { return d.start.getHours() } ),
-                            end: d3.max( d, function( d ) { return d.end.getHours() } ),
-                        }
-                    } )
-                    .map( shifts )
-                
                 var shiftStarts = d3.nest()
                     .key( function( d ) { return d.start } )
                     .rollup( function( d ) { return d } )
                     .map( shifts )
-
 
                 var shiftsByWeek = d3.nest()
                     .key( function( d ) { return week( d.start ) } )
@@ -87,7 +76,7 @@ function renderShiftsCalendar() {
                             .text( function() { return month( nextWeek( day ) ) } )
                     }
 
-                    if( week( day ) in weekBounds ) {
+                    if( week( day ) in shiftsByWeek ) {
                         var shiftsByTime = d3.nest()
                             .key( function( d ) { return time( d.start ) + "–" + time( d.end ) } )
                             .rollup( function( d ) { return d } )
@@ -99,11 +88,6 @@ function renderShiftsCalendar() {
                         }
                         shiftTimes.sort()
                         
-                        var dayShifts = d3.nest()
-                            .key( function( d ) { return time( d.start ) + "–" + time( d.end ) } )
-                            .rollup( function( d ) { return d } )
-                            .map( shifts.filter( function( d ) { return date( d.start ) == date( day ) } ) )
-
                         shiftTimes.forEach( function( times ) {
                             var weeks = d3.select( '#shifts' )
                                 .append( 'ol' )
@@ -123,14 +107,11 @@ function renderShiftsCalendar() {
                                 } )
                                 .append( 'ul' )
                                 .classed( 'shifts', true )
-                                .filter( function( d ) { return times in dayShifts } )
-                                .data( function( d ) {
-                                    dayShifts[ times ].filter( function( d ) { return date( d ) == date( day ) } )
-                                } )
-                                .filter( function( d ) { return d.length > 0 } )
-                                .enter()
-                                .classed( 'open', true )
                                 .selectAll( '.shift' )
+                                .data( function( d ) {
+                                    return shiftsByTime[ times ].filter( function( s ) { return date( s.start ) == date( d ) } )
+                                } )
+                                .enter()
                                 .append( 'li' )
                                 .classed( 'shift', true )
                                 .classed( 'taken', function( d ) { return d.taken } )
