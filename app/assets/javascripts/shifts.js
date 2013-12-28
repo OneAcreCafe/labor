@@ -4,8 +4,9 @@ function renderShiftsCalendar() {
     var day = d3.time.format( '%-d' ),
         weekday = d3.time.format( '%w' ),
         week = d3.time.format( '%U' ),
-        hour = d3.time.format( '%H' ),
-        time = d3.time.format( '%H:%M' ),
+        hour = d3.time.format( '%-I' ),
+        meridianlessTime = d3.time.format( '%-I:%M' ),
+        time = d3.time.format( '%-I:%M%p' ),
         month = d3.time.format( '%B' ),
         year = d3.time.format( '%Y' ),
         monthNumber = d3.time.format( '%m' ),
@@ -45,9 +46,14 @@ function renderShiftsCalendar() {
                     .map( shifts )
 
                 var shiftsByWeek = d3.nest()
-                    .key( function( d ) { return week( d.start ) } )
+                    .key( function( d ) {
+                        var weekNum = week( d.start )
+                        return weekNum == 0 ? 52 : weekNum // Assume year doesn't begin on Sunday
+                    } )
                     .rollup( function( d ) { return d } )
                     .map( shifts )
+
+                console.log( shiftsByWeek )
 
                 interval.forEach( function( day, index ) {
                     var weekdays = d3.time.days( day, nextWeek( day ) )
@@ -78,7 +84,9 @@ function renderShiftsCalendar() {
 
                     if( week( day ) in shiftsByWeek ) {
                         var shiftsByTime = d3.nest()
-                            .key( function( d ) { return time( d.start ) + "–" + time( d.end ) } )
+                            .key( function( d ) {
+                                return ( d.start.getMinutes() == 0 ? hour( d.start ) : meridianlessTime( d.start ) ) + "–" + time( d.end )
+                            } )
                             .rollup( function( d ) { return d } )
                             .map( shiftsByWeek[ week( day ) ] )
 
