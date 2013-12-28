@@ -25,6 +25,8 @@
         %tr
           %td.no-data{colspan: day_span + 1} No Shifts
       - else
+        - by_hours = shifts.group_by{ |s| (s.start.min == 0 ? s.start.strftime('%-I') : s.start.strftime('%-I:%M')) + "–" + s.end.strftime('%-I:%M%P') }
+        = by_hours.keys.sort
         - start_hour, end_hour = shifts.collect{ |s| s.start.hour }.minmax
         - (start_hour .. end_hour).step(1) do |hour|
           %tr
@@ -41,4 +43,4 @@
                         %li.taken= link_to '', shift
                     - (1 .. shift.needed).each do |x|
                       %li= link_to "\u00A0", shift
-              
+

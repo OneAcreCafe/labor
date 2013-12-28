@@ -106,10 +106,11 @@ class ShiftsController < ApplicationController
   def schedule
     begin
       offset = [0, 6].include?(Date.today.wday) ? 1 : 0
-      monday = Date.commercial(Date.today.year, Date.today.cweek + offset, 2).to_datetime
+      monday = Date.commercial(Date.today.year, Date.today.cweek + offset, 1).to_datetime
     rescue # week 52 + 1
-      monday = Date.commercial(Date.today.year + 1, 1, 2).to_datetime
+      monday = Date.commercial(Date.today.year + 1, 1, 1).to_datetime
     end
+    monday = monday.change(offset: '-0500')
     @start_date = params[:range] ? Time.zone.parse(params[:range][:start]) : monday
     @end_date = params[:range] ? Time.zone.parse(params[:range][:end]) : @start_date + 4.days
 
