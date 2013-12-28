@@ -16,7 +16,7 @@
 @import "bootstrap-custom";
 
 /* hack to fix overlap issue */
-#body { margin-top: 50px; }
+#body { margin-top: 60px; }
 
 img[src='/images/facebook-login.svg'] {
     max-width: 6em;
@@ -24,6 +24,7 @@ img[src='/images/facebook-login.svg'] {
 
 #logo {
     max-width: 1em;
+    float: left;
 }
 
 .navbar-brand {
@@ -63,4 +64,14 @@ a.btn:visited {
 // Firefox and IE
 .dropdown-menu .glyphicon {
     float: left;
+}
+
+.navbar:after, #body:before {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+body a:visited {
+    color: #333;
 }

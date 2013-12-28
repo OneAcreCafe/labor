@@ -13,6 +13,9 @@
     .navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
       .container
         .navbar-header
+          %button.navbar-toggle{ data: { toggle: 'collapse', target: '.navbar-collapse' } }
+            %span.sr-only Toggle navigation
+            %span.icon-bar
           = link_to root_path, class: 'navbar-brand' do
             = image_tag 'http://dhappy.org/.../image/logo/One%20Acre%20Cafe/', id: 'logo'
             Volunteers
@@ -70,7 +73,7 @@
               %li= link_to "Sign Up", new_user_registration_path
               %li= link_to "Login", new_user_session_path
     #body.container
-      %p.notice= notice
-      %p.alert= alert
+      %p.notice.hide= notice
+      %p.alert.hide= alert
 
       = yield
