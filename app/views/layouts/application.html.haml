@@ -28,13 +28,13 @@
                 %b.caret
               %ul.dropdown-menu
                 - if current_user
-                  %li
+                  %li.tabled
                     = link_to '', my_shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                     = link_to 'View Mine', my_shifts_path, class: :iconed
-                %li
+                %li.tabled
                   = link_to '', shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                   = link_to 'View All', shifts_path, class: :iconed
-                %li
+                %li.tabled
                   = link_to '', open_shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                   = link_to 'View Open', open_shifts_path, class: :iconed
                 %li= link_to 'Schedule', schedule_shifts_path

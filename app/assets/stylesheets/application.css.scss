@@ -39,7 +39,16 @@ img[src='/images/facebook-login.svg'] {
 
 .dropdown-menu {
     .iconed, .glyphicon {
-        display: inline-block;
+        display: table-cell;
+    }
+
+    .tabled {
+        display: table;
+        width: 100%;
+    }
+
+    li > a {
+        padding: 3px 10px;
     }
 }
 
@@ -59,11 +68,6 @@ body a:visited {
 
 a.btn:visited {
     color: #555;
-}
-
-// Firefox and IE
-.dropdown-menu .glyphicon {
-    float: left;
 }
 
 .navbar:after, #body:before {
