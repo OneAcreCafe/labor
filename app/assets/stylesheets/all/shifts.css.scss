@@ -12,13 +12,13 @@ body {
     width: 92%;
 }
 
-#take-shifts {
+.take-shifts {
     margin-top: 7px;
     float: right;
     margin-right: 8em;
 }
 
-.alert #take-shifts {
+.alert .take-shifts {
     float: none;
     display: inline;
     margin-top: 0;

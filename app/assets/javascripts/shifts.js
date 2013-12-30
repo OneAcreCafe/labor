@@ -163,7 +163,7 @@ $(document).on( 'page:load', renderShiftsCalendar )
 $(document).ready( renderShiftsCalendar )
 
 $(document).on( 'shifts:loaded', function() {
-    $('#take-shifts')
+    $('.take-shifts')
         .click( function() {
             var selected = d3.selectAll( 'input:checked' )
                 .map( function( selection ) {

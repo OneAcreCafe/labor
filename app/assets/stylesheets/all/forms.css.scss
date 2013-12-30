@@ -1,0 +1,23 @@
+input, select, textarea {
+    max-width: 20em;
+}
+
+.actions {
+    padding-left: 22em;
+}
+
+button, input, select, textarea, label {
+    margin-top: .75em;    
+}
+
+label {
+    text-align: right;
+}
+
+label:after {
+    content: ':';
+}
+
+.shift label:after {
+    content: '';
+}
