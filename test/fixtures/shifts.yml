@@ -26,6 +26,17 @@
 <% end %>
 <% end %>
 
+<% (10 .. 15).each_with_index do |hour, hour_index| %>
+<% day = day.change(hour: hour) %>
+<% ['dishwasher'].each_with_index do |task, task_index| %>
+<%= SecureRandom.uuid %>:
+  start: <%= day %>
+  end: <%= day + 1.hour %>
+  size: 3
+  task: <%= task %>
+<% end %>
+<% end %>
+
 <% (10 .. 14).each_with_index do |hour, hour_index| %>
 <% day = day.change(hour: hour, min: 30) %>
 <% ['drinks', 'greeter'].each_with_index do |task, task_index| %>

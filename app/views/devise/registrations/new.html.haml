@@ -1,5 +1,7 @@
 %h2 Sign Up
 
+%p.alert.alert-info Your email will not be shared with anyone.
+
 = form_for(resource, as: resource_name, url: registration_path(resource_name), class: 'form-horizontal') do |f|
   = devise_error_messages!
 
