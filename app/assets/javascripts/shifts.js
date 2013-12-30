@@ -95,7 +95,7 @@ function renderShiftsCalendar() {
                         var shiftTimes = []
                         for( var shiftTime in shiftsByTime ) {
                             shiftTimes.push( {
-                                start: shiftsByTime[shiftTime][0].start,
+                                start: shiftsByTime[shiftTime][0].start.getHours() + shiftsByTime[shiftTime][0].start.getMinutes() / 60,
                                 span: shiftTime
                             } )
                         }
