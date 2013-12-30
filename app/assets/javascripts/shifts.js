@@ -134,7 +134,7 @@ function renderShiftsCalendar() {
                                 .append( 'label' )
                                 .attr( {
                                     title: function( d ) {
-                                        return tasks[d.task_id].name + " (×" + d.needed + ")"
+                                        return (tasks[d.task_id] ? tasks[d.task_id].name : 'Unknown') + " (×" + d.needed + ")"
                                     }
                                 } )
                             
