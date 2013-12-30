@@ -9,7 +9,7 @@
     %th
 
   - count = 0
-  - @drops.find_each do |drop|
+  - @drops.each do |drop|
     - if drop.user and (can? :read, User or drop.user == current_user)
       - count += 1
       %tr

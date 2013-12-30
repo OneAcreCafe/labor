@@ -6,7 +6,7 @@ class DropsController < ApplicationController
   # GET /drops
   # GET /drops.json
   def index
-    @drops = Drop.all
+    @drops = Drop.order('time DESC').all
   end
 
   # GET /drops/1
