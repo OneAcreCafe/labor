@@ -25,9 +25,11 @@
         %tr
           %td.no-data{colspan: day_span + 1} No Shifts
       - else
+        - shift_times = shifts.map{ |s| { start: s.start.hour + s.start.min / 60, span: s.span } }.uniq.sort_by{ |s| s[:start] }
         - by_hours = shifts.group_by{ |s| s.span }
-        - by_hours.keys.sort.each do |hours|
+        - shift_times.each do |times|
           %tr
+            - hours = times[:span]
             %th.legend= hours
             - days(@start_date, @end_date).each do |day|
               %td
