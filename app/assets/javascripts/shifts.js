@@ -4,12 +4,16 @@ function renderShiftsCalendar() {
     var day = d3.time.format( '%-d' ),
         weekday = d3.time.format( '%w' ),
         week = d3.time.format( '%U' ),
-        hour = d3.time.format( '%H' ),
+        hour = d3.time.format( '%-I' ),
+        meridianlessTime = d3.time.format( '%-I:%M' ),
+        time = function() {
+            return d3.time.format( '%-I:%M' ).apply( this, arguments ) + d3.time.format( '%p' ).apply( this, arguments ).toLowerCase()
+        },
         month = d3.time.format( '%B' ),
         year = d3.time.format( '%Y' ),
         monthNumber = d3.time.format( '%m' ),
         percent = d3.format( '.1%' ),
-        format = d3.time.format( '%Y-%m-%d' )
+        date = d3.time.format( '%Y/%m/%d' )
     
     var url = window.location.pathname
     url = url.length <= 1 ? '/shifts/open' : url
@@ -38,24 +42,24 @@ function renderShiftsCalendar() {
                     return nextWeek
                 }
 
-                var weekBounds = d3.nest()
-                    .key( function( d ) { return week( d.start ) } )
-                    .rollup( function( d ) {
-                        return {
-                            start: d3.min( d, function( d ) { return d.start.getHours() } ),
-                            end: d3.max( d, function( d ) { return d.end.getHours() } ),
-                        }
-                    } )
-                    .map( shifts )
-                
                 var shiftStarts = d3.nest()
                     .key( function( d ) { return d.start } )
                     .rollup( function( d ) { return d } )
                     .map( shifts )
 
+                var shiftsByWeek = d3.nest()
+                    .key( function( d ) {
+                        var weekNum = week( d.start )
+                        return weekNum == 0 ? 52 : weekNum // Assume year doesn't begin on Sunday
+                    } )
+                    .rollup( function( d ) { return d } )
+                    .map( shifts )
+
+                console.log( shiftsByWeek )
+
                 interval.forEach( function( day, index ) {
                     var weekdays = d3.time.days( day, nextWeek( day ) )
-    
+
                     var titles = d3.select( '#shifts' )
                         .append( 'ol' )
                         .classed( 'titles', true )
@@ -80,22 +84,30 @@ function renderShiftsCalendar() {
                             .text( function() { return month( nextWeek( day ) ) } )
                     }
 
-                    if( week( day ) in weekBounds ) {
-                        for( var currentHour = weekBounds[week( day )].start; currentHour < weekBounds[week( day )].end; currentHour++ ) {
+                    if( week( day ) in shiftsByWeek ) {
+                        var shiftsByTime = d3.nest()
+                            .key( function( d ) {
+                                return ( d.start.getMinutes() == 0 ? hour( d.start ) : meridianlessTime( d.start ) ) + "–" + time( d.end )
+                            } )
+                            .rollup( function( d ) { return d } )
+                            .map( shiftsByWeek[ week( day ) ] )
+
+                        var shiftTimes = []
+                        for( var shiftTime in shiftsByTime ) {
+                            shiftTimes.push( shiftTime )
+                        }
+                        shiftTimes.sort()
+                        
+                        shiftTimes.forEach( function( times ) {
                             var weeks = d3.select( '#shifts' )
                                 .append( 'ol' )
                                 .classed( 'hours', true )
-                                .datum( function() {
-                                    day.setHours( currentHour )
-                                    return day
-                                } )
-
                             
                             weeks.append( 'li' )
                                 .classed( 'legend', true )
-                                .text( function( d ) { return hour( d ) + "–" + ( parseInt( hour( d ) ) + 1 ) + ":00" } )
+                                .text( times )
                             
-                            var hours = weeks.selectAll( '.hour' )
+                            var shiftItems = weeks.selectAll( '.hour' )
                                 .data( weekdays )
                                 .enter()
                                 .append( 'li' )
@@ -105,15 +117,10 @@ function renderShiftsCalendar() {
                                 } )
                                 .append( 'ul' )
                                 .classed( 'shifts', true )
-                                .datum( function( d ) {
-                                    d.setHours( currentHour )
-                                    return d
-                                } )
-                            
-                            var shifts = hours.filter( function( d ) { return d in shiftStarts } )
-                                .classed( 'open', true )
                                 .selectAll( '.shift' )
-                                .data( function( d ) { return shiftStarts[d] } )
+                                .data( function( d ) {
+                                    return shiftsByTime[ times ].filter( function( s ) { return date( s.start ) == date( d ) } )
+                                } )
                                 .enter()
                                 .append( 'li' )
                                 .classed( 'shift', true )
@@ -126,20 +133,20 @@ function renderShiftsCalendar() {
                                     }
                                 } )
                             
-                            shifts
+                            shiftItems
                                 .append( 'input' )
                                 .attr( {
                                     type: 'radio',
                                     name: function( d ) { return 'shift[' + d.start + ']' } 
                                 } )
                             
-                            shifts
+                            shiftItems
                                 .append( 'img' )
                                 .classed( 'icon', true )
                                 .attr( {
                                     src: function( d ) { return tasks[d.task_id] ? tasks[d.task_id].icon : null }
                                 } )
-                        }
+                        } )
                     }
                 } )
 
@@ -156,7 +163,7 @@ $(document).on( 'page:load', renderShiftsCalendar )
 $(document).ready( renderShiftsCalendar )
 
 $(document).on( 'shifts:loaded', function() {
-    $('#take-shifts')
+    $('.take-shifts')
         .click( function() {
             var selected = d3.selectAll( 'input:checked' )
                 .map( function( selection ) {

@@ -2,9 +2,9 @@
 %html{:'xmlns:fb' => 'http://ogp.me/ns/fb#'}
   %head
     %title Volunteers
-    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     /[if IE]
-      = stylesheet_link_tag    "ie", media: "all"
+      = stylesheet_link_tag "ie", media: "all"
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/d3/3.3.10/d3.min.js"
     = javascript_include_tag "application", "data-turbolinks-track" => true
     = csrf_meta_tags
@@ -13,6 +13,9 @@
     .navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
       .container
         .navbar-header
+          %button.navbar-toggle{ data: { toggle: 'collapse', target: '.navbar-collapse' } }
+            %span.sr-only Toggle navigation
+            %span.icon-bar
           = link_to root_path, class: 'navbar-brand' do
             = image_tag 'http://dhappy.org/.../image/logo/One%20Acre%20Cafe/', id: 'logo'
             Volunteers
@@ -25,13 +28,13 @@
                 %b.caret
               %ul.dropdown-menu
                 - if current_user
-                  %li
+                  %li.tabled
                     = link_to '', my_shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                     = link_to 'View Mine', my_shifts_path, class: :iconed
-                %li
+                %li.tabled
                   = link_to '', shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                   = link_to 'View All', shifts_path, class: :iconed
-                %li
+                %li.tabled
                   = link_to '', open_shifts_path + "?layout=table", class: [:glyphicon, 'glyphicon-list-alt']
                   = link_to 'View Open', open_shifts_path, class: :iconed
                 %li= link_to 'Schedule', schedule_shifts_path
@@ -77,9 +80,6 @@
               = link_to 'About', about_path
 
           %ul.nav.navbar-nav.navbar-right
-            - if params[:controller] == 'shifts'
-              %li
-                %button#take-shifts.btn.btn-default.btn-primary Take Shifts
             - if user_signed_in?
               %li= link_to current_user.full_name, edit_user_registration_path
               %li= link_to "Logout", destroy_user_session_path, method: :delete
@@ -87,7 +87,7 @@
               %li= link_to "Sign Up", new_user_registration_path
               %li= link_to "Login", new_user_session_path
     #body.container
-      %p.notice= notice
-      %p.alert= alert
+      %p#notice.alert.alert-info.hide= notice
+      %p#alert.alert.alert-danger.hide= alert
 
       = yield

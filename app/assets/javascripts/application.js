@@ -28,4 +28,15 @@
     
     $( setBrowser )
     $(document).on( 'page:load', setBrowser )
+
+    function showMessages() {
+        $.each( ['#notice', '#alert'], function( index, type ) {
+            if( $(type).text().length > 0 ) {
+                $(type).removeClass( 'hide' )
+            }
+        } )
+    }
+    
+    $( showMessages )
+    $(document).on( 'page:load', showMessages )
 } )()

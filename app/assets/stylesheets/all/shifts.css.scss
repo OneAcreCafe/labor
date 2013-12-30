@@ -5,12 +5,23 @@
 @import url(http://fonts.googleapis.com/css?family=Lato);
 
 body {
-  font: 10px sans-serif;
   shape-rendering: crispEdges;
 }
 
-#take-shifts {
+.container {
+    width: 92%;
+}
+
+.take-shifts {
     margin-top: 7px;
+    float: right;
+    margin-right: 8em;
+}
+
+.alert .take-shifts {
+    float: none;
+    display: inline;
+    margin-top: 0;
 }
 
 .day {
@@ -126,6 +137,7 @@ input:checked + .icon {
     padding-right: .5em;
     font-size: 125%;
     vertical-align: middle;
+    font-variant: small-caps;
 }
 
 .legend .hour {

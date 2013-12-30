@@ -8,11 +8,15 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require_self
  *= require bootstrap-datepicker
+ *= require_self
  *= require_tree ./all
- *= require twitter/bootstrap
  */
+
+@import "bootstrap-custom";
+
+/* hack to fix overlap issue */
+#body { margin-top: 60px; }
 
 img[src='/images/facebook-login.svg'] {
     max-width: 6em;
@@ -20,6 +24,7 @@ img[src='/images/facebook-login.svg'] {
 
 #logo {
     max-width: 1em;
+    float: left;
 }
 
 .navbar-brand {
@@ -34,7 +39,16 @@ img[src='/images/facebook-login.svg'] {
 
 .dropdown-menu {
     .iconed, .glyphicon {
-        display: inline-block;
+        display: table-cell;
+    }
+
+    .tabled {
+        display: table;
+        width: 100%;
+    }
+
+    li > a {
+        padding: 3px 10px;
     }
 }
 
@@ -56,11 +70,16 @@ a.btn:visited {
     color: #555;
 }
 
-a.btn-danger:visited {
-    color: white;
+a.btn-primary:visited, a.btn-danger:visited {
+    color: #EEE;
 }
 
-// Firefox and IE
-.dropdown-menu .glyphicon {
-    float: left;
+.navbar:after, #body:before {
+    display: block;
+    clear: both;
+    content: '';
+}
+
+body a:visited {
+    color: #333;
 }

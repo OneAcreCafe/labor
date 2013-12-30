@@ -25,4 +25,11 @@
                 %button.btn.btn-default{ data: { dismiss: 'modal' } } Close
                 = submit_tag 'Add Shifts', class: [:btn, 'btn-primary ']
 
+  - if not current_user
+    .alert.alert-info
+      Select desired shifts then click
+      %button.take-shifts.btn.btn-default.btn-primary Take Shifts
+
   #shifts
+
+  %button.take-shifts.btn.btn-default.btn-primary Take Shifts

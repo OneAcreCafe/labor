@@ -25,20 +25,19 @@
         %tr
           %td.no-data{colspan: day_span + 1} No Shifts
       - else
-        - start_hour, end_hour = shifts.collect{ |s| s.start.hour }.minmax
-        - (start_hour .. end_hour).step(1) do |hour|
+        - by_hours = shifts.group_by{ |s| (s.start.min == 0 ? s.start.strftime('%-I') : s.start.strftime('%-I:%M')) + "–" + s.end.strftime('%-I:%M%P') }
+        - by_hours.keys.sort.each do |hours|
           %tr
-            %th= sprintf '%d–%d:00', hour, hour + 1
+            %th.legend= hours
             - days(@start_date, @end_date).each do |day|
-              - day = day.change(hour: hour)
               %td
                 %ul.workers
-                  - task.shifts.where('start >= ? AND start < ?', day, day + 1.hour).find_each do |shift|
-                    - shift.workers.find_each do |worker|
+                  - by_hours[hours].collect{ |s| s.start.strftime('%Y/%m/%d') == day.strftime('%Y/%m/%d') ? s : nil }.compact.each do |shift|
+                    - shift.workers.each do |worker|
                       - if worker == current_user or can? :read, User
                         %li= link_to worker.display_name, shift
                       - else
                         %li.taken= link_to '', shift
                     - (1 .. shift.needed).each do |x|
                       %li= link_to "\u00A0", shift
-              
+

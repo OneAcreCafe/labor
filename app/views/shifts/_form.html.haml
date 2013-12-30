@@ -27,4 +27,4 @@
     .col-sm-10= f.collection_select :worker_ids, User.all, :id, :full_name, { selected: @shift.workers.collect(&:id) }, { multiple: true, class: 'form-control' }
     
   .actions
-    = f.submit 'Save', class: [:btn, 'btn-default']
+    = f.submit 'Save', class: [:btn, 'btn-primary']
