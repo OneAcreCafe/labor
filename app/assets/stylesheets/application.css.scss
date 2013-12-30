@@ -67,11 +67,11 @@ body a:visited {
 }
 
 a.btn:visited {
-    color: #555;
+    color: #EEE;
 }
 
-a.btn-primary:visited, a.btn-danger:visited {
-    color: #EEE;
+a.btn-default:visited {
+    color: #555;
 }
 
 .navbar:after, #body:before {

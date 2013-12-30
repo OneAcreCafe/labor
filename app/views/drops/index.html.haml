@@ -14,16 +14,16 @@
       - count += 1
       %tr
         %td= drop.user.full_name
-        %td= drop.shift
+        %td= link_to drop.shift, drop.shift
         %td= drop.time
         %td= drop.reason
         %td
-          = link_to 'Show', drop, class: [:btn, 'btn-default']
-          = link_to 'Edit', edit_drop_path(drop), class: [:btn, 'btn-default']
-          = link_to 'Destroy', drop, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+          = link_to 'Show', drop, class: [:btn, 'btn-info']
+          = link_to 'Edit', edit_drop_path(drop), class: [:btn, 'btn-primary']
+          = link_to 'Delete', drop, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-danger']
   - if count == 0
     %tr
       %td{ colspan: 5 } No Drops
     
 
-= link_to 'New Drop', new_drop_path, class: [:btn, 'btn-default']
+= link_to 'New Drop', new_drop_path, class: [:btn, 'btn-primary']
