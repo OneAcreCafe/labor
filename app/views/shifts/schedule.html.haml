@@ -16,7 +16,7 @@
       %tr
         %th.task{colspan: day_span + 1}= task.name
       %tr
-        %th= @start_date
+        %th
         - days(@start_date, @end_date).each do |day|
           %th= day.strftime('%b %-d')
     %tbody
