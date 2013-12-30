@@ -94,18 +94,23 @@ function renderShiftsCalendar() {
 
                         var shiftTimes = []
                         for( var shiftTime in shiftsByTime ) {
-                            shiftTimes.push( shiftTime )
+                            shiftTimes.push( {
+                                start: shiftsByTime[shiftTime][0].start,
+                                span: shiftTime
+                            } )
                         }
-                        shiftTimes.sort()
+                        shiftTimes.sort( function( a, b ) {
+                            return a.start >= b.start
+                        } )
                         
-                        shiftTimes.forEach( function( times ) {
+                        shiftTimes.forEach( function( time ) {
                             var weeks = d3.select( '#shifts' )
                                 .append( 'ol' )
                                 .classed( 'hours', true )
                             
                             weeks.append( 'li' )
                                 .classed( 'legend', true )
-                                .text( times )
+                                .text( time.span )
                             
                             var shiftItems = weeks.selectAll( '.hour' )
                                 .data( weekdays )
@@ -119,7 +124,7 @@ function renderShiftsCalendar() {
                                 .classed( 'shifts', true )
                                 .selectAll( '.shift' )
                                 .data( function( d ) {
-                                    return shiftsByTime[ times ].filter( function( s ) { return date( s.start ) == date( d ) } )
+                                    return shiftsByTime[ time.span ].filter( function( s ) { return date( s.start ) == date( d ) } )
                                 } )
                                 .enter()
                                 .append( 'li' )
