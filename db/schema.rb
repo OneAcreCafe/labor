@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131217184750) do
+ActiveRecord::Schema.define(version: 20131230195935) do
 
   create_table "drops", force: true do |t|
     t.integer  "shift_id"
@@ -84,8 +84,13 @@ ActiveRecord::Schema.define(version: 20131217184750) do
     t.string   "given_name"
     t.string   "family_name"
     t.string   "nickname"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "unconfirmed_email"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
