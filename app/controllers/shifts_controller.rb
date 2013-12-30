@@ -7,7 +7,7 @@ class ShiftsController < ApplicationController
   # GET /shifts
   # GET /shifts.json
   def index
-    @shifts = Shift.all.sort_by{ |s| [s.start, s.task.name] }
+    @shifts = Shift.all.sort_by{ |s| [s.start, s.task.try(:name)] }
 
     respond_to do |format|
       format.html # index.html.erb
