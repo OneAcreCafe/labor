@@ -12,5 +12,5 @@
         %li= user.full_name
 
 - if can? :update, @role
-  = link_to 'Edit', edit_role_path(@role), class: [:btn, 'btn-default']
+  = link_to 'Edit', edit_role_path(@role), class: [:btn, 'btn-primary']
 = link_to 'Back', roles_path, class: [:btn, 'btn-default']

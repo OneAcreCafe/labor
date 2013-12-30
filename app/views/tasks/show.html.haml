@@ -12,7 +12,7 @@
   = image_tag @task.icon, class: :icon
 
 - if can? :update, @task
-  = link_to 'Edit', edit_task_path(@task), class: [:btn, 'btn-default']
+  = link_to 'Edit', edit_task_path(@task), class: [:btn, 'btn-primary']
 - if can? :destroy, @task
-  = link_to 'Destroy', @task, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+  = link_to 'Destroy', @task, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-danger']
 = link_to 'Back', tasks_path, class: [:btn, 'btn-default']
