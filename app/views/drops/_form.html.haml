@@ -8,7 +8,7 @@
 
   .form-group
     = f.label :shift, class: ['col-sm-2', 'control-label']
-    .col-sm-10= f.collection_select :shift_id, current_user.shifts.where('start >= ?', Time.now).order(:start), :id, :to_s, { selected: @shift ? @shift.id : nil }, { class: 'form-control' }
+    .col-sm-10= f.collection_select :shift_id, current_user.shifts.where('start >= ? OR shifts.id = ?', Time.now, @shift.id).order(:start), :id, :to_s, { selected: @shift ? @shift.id : nil }, { class: 'form-control' }
 
   .form-group
     = f.label :reason, class: ['col-sm-2', 'control-label']

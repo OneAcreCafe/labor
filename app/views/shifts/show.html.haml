@@ -29,12 +29,12 @@
 - if @shift.worker?(current_user)
   %p You are signed up for this shift
   = link_to 'Drop', drop_shift_path(@shift), class: [:btn, 'btn-danger']
-- else
+- elsif @shift.start > Time.now and @shift.needed > 0
   = form_tag take_shifts_path do
     %input{ type: 'hidden', name: 'shift_ids[]', value: @shift.id }
     = submit_tag 'Take This Shift', class: [:btn, 'btn-success']
 
-.actions
+.options
   - if can? :destroy, @shift
     = link_to 'Delete', @shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-danger']
   - if can? :update, @shift

@@ -92,7 +92,7 @@ class ShiftsController < ApplicationController
       authenticate_user!
     end
 
-    @workers = params[:shift][:worker_ids].try(:map){ |id| User.find(id) if not id.empty? }.compact if can? :read, User
+    @workers = params[:shift][:worker_ids].try(:map){ |id| User.find(id) if not id.empty? }.compact if params[:shift] and can? :read, User
     @workers ||= [current_user]
 
     @shifts = []

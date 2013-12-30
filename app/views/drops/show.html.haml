@@ -2,7 +2,9 @@
 
 %ul
   %li= "User: #{@drop.user.full_name}" if @drop.user
-  %li Shift: #{@drop.shift.to_s}
+  %li
+    Shift:
+    = link_to @drop.shift, @drop.shift
   %li Time: #{@drop.time}
   %li Reason: #{@drop.reason}
 
