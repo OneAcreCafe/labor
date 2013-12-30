@@ -15,4 +15,8 @@ class Shift < ActiveRecord::Base
   def to_s
     start.strftime('%Y/%m/%d @ %H:%M') + "–" + self.end.strftime('%H:%M') + ": " + task.name
   end
+
+  def span
+    (start.min == 0 ? start.strftime('%-I') : start.strftime('%-I:%M')) + "–" + self.end.strftime('%-I:%M%P')
+  end
 end

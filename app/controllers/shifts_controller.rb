@@ -22,7 +22,7 @@ class ShiftsController < ApplicationController
       Shift
       .where('start >= ?', Time.now)
       .select{ |s| s.needed > 0 || s.worker?(current_user) }
-      .sort_by{ |s| [s.start, s.task.name] }
+      .sort_by{ |s| [s.start, s.task.try(:name)] }
 
     respond_to do |format|
       format.html { render :index }
