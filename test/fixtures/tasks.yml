@@ -3,17 +3,35 @@ server:
   description: Serve food to customers
   icon: http://dhappy.org/.../image/icon/platter/
 
-sous-chef:
-  name: Sous-chef
-  description: Assist the chef prepare food
-  icon: http://dhappy.org/.../image/icon/hat/chef/1/
+busser:
+  name: Busser
+  description: Clear and wipe down tables
+  icon: http://dhappy.org/.../image/icon/dish/dirty/
 
 greeter:
   name: Greeter
   description: Welcome customers to the establishment
   icon: http://dhappy.org/.../image/icon/hand/
 
-janitor:
-  name: Janitorial
+cleanup:
+  name: Cleanup
   description: Maintain the cleanliness of the establishment
   icon: http://dhappy.org/.../image/icon/broom/
+
+setup:
+  name: Setup
+  description: Prepare the café to open
+  icon: http://dhappy.org/.../image/icon/tools/
+
+drinks:
+  name: Drink Station
+  description: Prepare drink orders
+  icon: http://dhappy.org/.../image/icon/drinks/
+
+dishwasher:
+  name: Dishwasher
+  description: Wash dishes
+  icon: http://dhappy.org/.../image/icon/soap/
+
+
+

@@ -99,9 +99,11 @@ function renderShiftsCalendar() {
                                 span: shiftTime
                             } )
                         }
-                        shiftTimes.sort( function( a, b ) {
-                            return a.start >= b.start
+                        shiftTimes = shiftTimes.sort( function( a, b ) {
+                            return a.start - b.start
                         } )
+
+                        console.log( shiftTimes )
                         
                         shiftTimes.forEach( function( time ) {
                             var weeks = d3.select( '#shifts' )
