@@ -25,8 +25,8 @@
           %td= link_to_if(!in_mail, shift.task.name, shift) if shift.task
           - unless in_mail
             %td
-              = link_to 'Show', shift, class: [:btn, 'btn-default']
+              = link_to 'Show', shift, class: [:btn, 'btn-info']
               - if defined? can? and can? :update, shift
-                = link_to 'Edit', edit_shift_path(shift), class: [:btn, 'btn-default']
+                = link_to 'Edit', edit_shift_path(shift), class: [:btn, 'btn-primary']
               - if defined? can? and can? :destroy, shift
-                = link_to 'Delete', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+                = link_to 'Delete', shift, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-danger']
