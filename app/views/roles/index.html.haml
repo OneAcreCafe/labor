@@ -9,11 +9,11 @@
     %tr
       %td= role.name
       %td
-        = link_to 'Show', role, class: [:btn, 'btn-default']
+        = link_to 'Show', role, class: [:btn, 'btn-info']
         - if can? :update, role
-          = link_to 'Edit', edit_role_path(role), class: [:btn, 'btn-default']
+          = link_to 'Edit', edit_role_path(role), class: [:btn, 'btn-primary']
         - if can? :destroy, role
-          = link_to 'Delete', role, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-default']
+          = link_to 'Delete', role, :method => :delete, :data => { :confirm => 'Are you sure?' }, class: [:btn, 'btn-danger']
 
 - if can? :create, Role
-  = link_to 'New Role', new_role_path, class: [:btn, 'btn-default']
+  = link_to 'New Role', new_role_path, class: [:btn, 'btn-primary']
