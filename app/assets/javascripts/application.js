@@ -31,7 +31,7 @@
 
     function showMessages() {
         $.each( ['#notice', '#alert'], function( index, type ) {
-            if( $(type).text().length > 0 ) {
+            if( $(type).text().length > 0 && $(type).text() != 'You are already signed in.' ) {
                 $(type).removeClass( 'hide' )
             }
         } )

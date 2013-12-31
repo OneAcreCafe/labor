@@ -204,7 +204,7 @@ input:checked + .icon {
     }
 
     th, td {
-        border: 1px solid;
+        border: 2px solid;
     }
 
     td {
@@ -225,6 +225,7 @@ input:checked + .icon {
             line-height: 2.5em;
             min-height: 2.5em;
             background-color: white;
+            margin-top: -1px;
 
             a {
                 display: block;
