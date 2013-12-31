@@ -67,7 +67,7 @@ body {
 }
 
 .shift img {
-    margin-bottom: 0;
+    margin-bottom: .1em;
 }
 
 .icon {
@@ -184,6 +184,10 @@ input:checked + .icon {
 
 .shift {
     margin-left: .25em;
+
+    label {
+        margin-top: .1em;
+    }
 }
 
 .schedule {
