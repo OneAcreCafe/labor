@@ -25,6 +25,11 @@
                 %button.btn.btn-default{ data: { dismiss: 'modal' } } Close
                 = submit_tag 'Add Shifts', class: [:btn, 'btn-primary ']
 
+  #test-alert.alert.alert-success
+    %span.glyphicon.glyphicon-bullhorn
+    :markdown
+      This is a test site. Sign up for and drop shifts with abandon. [Please report any issues.](//github.com/OneAcreCafe/volunteers/issues)
+
   - if not current_user
     .alert.alert-info
       Select desired shifts then click
