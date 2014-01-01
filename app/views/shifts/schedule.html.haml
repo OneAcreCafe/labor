@@ -14,11 +14,11 @@
   %table.schedule
     %thead
       %tr
-        %th.task{colspan: day_span + 1 }= task.name
+        %th.task{ colspan: day_span + 1 }= task.name
       %tr
         %th
         - days(@start_date, @end_date).each do |day|
-          %th{ style: "width: " + (100 / (day_span)).to_s + "%" }= day.strftime('%b %-d')
+          %th{ style: "width: " + (100 / (day_span)).to_s + "%" }= day.strftime('%b %-d %Y')
     %tbody
       - shifts = Shift.where('start >= ? AND start < ? AND task_id = ?', @start_date, @end_date + 1.day, task)
       - if shifts.count == 0

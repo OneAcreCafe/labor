@@ -106,9 +106,10 @@ class ShiftsController < ApplicationController
   def schedule
     begin
       weekOffset = [0, 6].include?(Date.today.wday) ? 1 : 0
-      yearOffset = Date.today.cweek == 1 and Date.today.day > 7 ? 1 : 0
-      monday = Date.commercial(Date.today.year + yearOffset, Date.today.cweek + offset, 1).to_datetime
-    rescue # week 52 + 1
+      yearOffset = (Date.today.cweek == 1 and Date.today.day > 7) ? 1 : 0
+      monday = Date.commercial(Date.today.year + yearOffset, Date.today.cweek + weekOffset, 1).to_datetime
+    rescue Exception => e # week 52 + 1
+      puts e.message
       monday = Date.commercial(Date.today.year + 1, 1, 1).to_datetime
     end
     monday = monday.change(offset: '-0500')
